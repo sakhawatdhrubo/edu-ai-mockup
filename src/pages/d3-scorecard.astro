@@ -1,0 +1,60 @@
+---
+/* D3 Mock scorecard — honest performance read-out + drill path. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+
+const rows = [
+  { o: 'Acceleration', c: 4, t: 5, time: '৪৮s' },
+  { o: 'Velocity', c: 5, t: 5, time: '৩১s' },
+  { o: "Newton's law", c: 2, t: 5, time: '৭২s' },
+];
+const drills = ["Newton's law", 'ঋণাত্মক ত্বরণ'];
+---
+<Layout title="স্কোরকার্ড" id="D3" active="mock">
+  <div class="mb-4 text-center">
+    <span class="text-3xl">🎯</span>
+    <h1 class="mt-1 text-lg font-bold">ফলাফল</h1>
+    <div class="mt-1 text-3xl font-bold text-indigo-600 dark:text-indigo-400">১১<span class="text-lg text-slate-400">/১৫</span></div>
+    <p class="text-sm text-slate-500 dark:text-slate-400">৭৩% · স্বয়ংক্রিয়ভাবে গণনা</p>
+  </div>
+
+  <!-- per-outcome -->
+  <Card class="mb-3">
+    <h2 class="mb-2 text-sm font-bold">আউটকাম অনুযায়ী</h2>
+    <table class="w-full text-sm">
+      <thead><tr class="text-xs text-slate-400"><th class="text-left font-normal">আউটকাম</th><th class="font-normal">সঠিক</th><th class="text-right font-normal">সময়/প্রশ্ন</th></tr></thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr class="border-t border-slate-100 dark:border-slate-800">
+            <td class="py-1.5">{r.o}</td>
+            <td class:list={['text-center', r.c / r.t < 0.5 ? 'text-rose-600' : 'text-emerald-600']}>{r.c}/{r.t}</td>
+            <td class="py-1.5 text-right text-xs text-slate-400">{r.time}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </Card>
+
+  <!-- misconception flags -->
+  <Card tone="amber" class="mb-3">
+    <p class="text-sm"><span class="font-semibold">ভুল-বোঝা ধরা পড়েছে:</span> বল ছাড়া গতি থাকতে পারে না — এটা নিয়ে কাজ করা দরকার।</p>
+  </Card>
+
+  <!-- weak-topic drills -->
+  <p class="mb-2 text-sm font-bold">দুর্বল জায়গা — এখনই অনুশীলন করো</p>
+  <div class="mb-3 flex flex-wrap gap-2">
+    {drills.map((d) => (
+      <a href="/c2-greeting" class="rounded-full bg-indigo-50 px-3 py-1.5 text-xs font-medium text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">Drill: {d} →</a>
+    ))}
+  </div>
+
+  <!-- cohort -->
+  <Card tone="sky" class="mb-4"><p class="text-sm">📊 তুমি এই মকে উপরের ২৫%-এ আছ। ভালো করছ!</p></Card>
+
+  <div class="flex gap-2">
+    <Button href="/d1-mock-setup" full>আরেকটি মক</Button>
+    <Button href="/b1-dashboard" variant="ghost">ড্যাশবোর্ড</Button>
+  </div>
+</Layout>

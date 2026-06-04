@@ -1,0 +1,49 @@
+---
+/* D1 Mock exam setup — pick an exam to rehearse. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+
+const presets = [
+  { t: 'একক অধ্যায়', d: '১০–১৫ প্রশ্ন · ৩০ মিনিট', tone: 'indigo', locked: false },
+  { t: 'বহু-অধ্যায়', d: '২৫ প্রশ্ন · ৬০ মিনিট', tone: 'sky', locked: false },
+  { t: 'পূর্ণ মডেল টেস্ট', d: '৫০ প্রশ্ন · ৯০ মিনিট · থামানো যাবে না', tone: 'slate', locked: true },
+];
+---
+<Layout title="মক সেটআপ" id="D1" active="mock">
+  <h1 class="mb-1 text-lg font-bold">📝 মক পরীক্ষা</h1>
+  <p class="mb-4 text-sm text-slate-500 dark:text-slate-400">আসল পরীক্ষার মতো করে অনুশীলন করো।</p>
+
+  <div class="space-y-2">
+    {presets.map((p) => (
+      p.locked ? (
+        <Card class="opacity-60">
+          <div class="flex items-center justify-between">
+            <div><div class="text-sm font-semibold">{p.t} 🔒</div><div class="text-xs text-slate-500 dark:text-slate-400">{p.d}</div></div>
+            <Pill tone="slate">আরও অনুশীলন দরকার</Pill>
+          </div>
+        </Card>
+      ) : (
+        <a href="/d2-mock-runner" class="block">
+          <Card tone={p.tone}>
+            <div class="flex items-center justify-between">
+              <div><div class="text-sm font-semibold">{p.t}</div><div class="text-xs text-slate-500 dark:text-slate-400">{p.d}</div></div>
+              <span class="text-slate-300">›</span>
+            </div>
+          </Card>
+        </a>
+      )
+    ))}
+  </div>
+
+  <!-- confirm modal note -->
+  <Card tone="amber" class="mt-4">
+    <p class="text-sm font-semibold">প্রস্তুত?</p>
+    <p class="mt-1 text-sm">⚠️ মাঝপথে থামানো যাবে না। ৩০ মিনিট।</p>
+    <div class="mt-3 flex gap-2">
+      <Button href="/d2-mock-runner" full>শুরু করুন</Button>
+      <Button href="/b1-dashboard" variant="ghost">বাতিল</Button>
+    </div>
+  </Card>
+</Layout>

@@ -1,0 +1,44 @@
+---
+/* D2 Mock exam runner — real-exam conditions. No hints, no feedback. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import FormulaFab from '../components/FormulaFab.astro';
+import Math from '../components/Math.astro';
+
+const opts = [
+  { k: 'ক', t: '2 m/s²' },
+  { k: 'খ', t: '4 m/s²', sel: true },
+  { k: 'গ', t: '5 m/s²' },
+  { k: 'ঘ', t: '10 m/s²' },
+];
+---
+<Layout title="মক · চলছে" id="D2" rails={false} nav={false}>
+  <!-- sticky exam header -->
+  <header class="sticky top-0 z-40 flex items-center gap-2 border-b border-slate-200 bg-white/95 px-3 py-2 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95" slot="header">
+    <span class="rounded bg-rose-50 px-2 py-1 font-mono text-sm font-bold text-rose-600 dark:bg-rose-500/10">⏱ ২৪:১২</span>
+    <span class="flex-1 text-center text-xs font-medium text-slate-500">প্রশ্ন ৫/১৫</span>
+    <Button href="/d3-scorecard" size="sm">জমা দিন</Button>
+  </header>
+
+  <Card class="mb-4">
+    <p class="text-sm leading-relaxed">একটি গাড়ি স্থির অবস্থা থেকে ৫ সেকেন্ডে <Math tex="20\ \text{m/s}" /> বেগ পায়। ত্বরণ কত?</p>
+    <div class="mt-4 space-y-2">
+      {opts.map((o) => (
+        <label class:list={['flex items-center gap-3 rounded-md border px-3 py-2.5 min-h-touch', o.sel ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10' : 'border-slate-200 dark:border-slate-700']}>
+          <span class:list={['grid h-6 w-6 place-items-center rounded-full border text-xs font-bold', o.sel ? 'border-indigo-500 bg-indigo-600 text-white' : 'border-slate-300 text-slate-500 dark:border-slate-600']}>{o.k}</span>
+          <span class="text-sm">{o.t}</span>
+        </label>
+      ))}
+    </div>
+  </Card>
+
+  <!-- free nav -->
+  <div class="flex items-center justify-between">
+    <Button href="/d2-mock-runner" variant="secondary" size="sm">◀ আগের</Button>
+    <span class="text-xs text-slate-400">কোনো হিন্ট/ফিডব্যাক নেই</span>
+    <Button href="/d2-mock-runner" variant="secondary" size="sm">পরের ▶</Button>
+  </div>
+
+  <FormulaFab />
+</Layout>

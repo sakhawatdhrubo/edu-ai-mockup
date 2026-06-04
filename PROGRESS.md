@@ -65,33 +65,33 @@ Zone C — Core loop ✅ (added SessionBar.astro shell)
 - [x] C11 End + reflection
 - [x] C12 Session summary
 
-Zone D — Assess
-- [ ] D1 Mock setup
-- [ ] D2 Mock runner
-- [ ] D3 Scorecard
-- [ ] D4 Formula sheet (overlay)
+Zone D — Assess ✅
+- [x] D1 Mock setup
+- [x] D2 Mock runner (FormulaFab)
+- [x] D3 Scorecard
+- [x] D4 Formula sheet (right-docked overlay)
 
-Zone E — Review
-- [ ] E1 History
-- [ ] E2 Replay
-- [ ] E3 Mistake log
-- [ ] E4 Calibration curve
-- [ ] E5 Notes library + flashcards
-- [ ] E6 Worksheet export
-- [ ] E7 Concept search
+Zone E — Review ✅
+- [x] E1 History
+- [x] E2 Replay
+- [x] E3 Mistake log
+- [x] E4 Calibration curve (inline SVG)
+- [x] E5 Notes library + flashcards
+- [x] E6 Worksheet export
+- [x] E7 Concept search
 
-Zone F — Motivation
-- [ ] F1 Streak & freeze
-- [ ] F2 Badge wall
-- [ ] F3 Celebrations (overlays)
-- [ ] F4 Daily goal
-- [ ] F5 Annual recap
+Zone F — Motivation ✅
+- [x] F1 Streak & freeze
+- [x] F2 Badge wall
+- [x] F3 Celebrations (overlay)
+- [x] F4 Daily goal
+- [x] F5 Annual recap
 
-Zone G — System & utility
-- [ ] G1 Not-found
-- [ ] G2 Notifications center
-- [ ] G3 Invite / referral
-- [ ] G4 Feedback / bug report
+Zone G — System & utility ✅ (+ real 404.astro mirrors G1)
+- [x] G1 Not-found
+- [x] G2 Notifications center
+- [x] G3 Invite / referral
+- [x] G4 Feedback / bug report
 
 Zone H — Trust & people
 - [ ] H1 Report / Crisis (overlay)
@@ -117,12 +117,13 @@ Zone I — Billing
 - [ ] dark-mode pass · [ ] mobile (~390px) pass on every page · [ ] index complete + all links work · [ ] `npm run build` clean
 
 ## Current next step
-> **Phase 1 — Zone D (D1–D4 Assess), then E, F, G, H, I.** Zones A/B/C done + builds clean (23 pages). SessionBar lives via Layout's `header` named slot (`<SessionBar ... slot="header" />`).
+> **Phase 1 — Zone H (H1–H12 Trust/people), then Zone I (I1–I4 Billing). Then Phase 2 polish.** Zones A–G done + builds clean (44 pages incl. index + 404).
 
 ## Gotchas (read before writing screens)
 - **Inline math/braces**: never write `\(F_{net}=0\)` directly in `.astro` markup — Astro parses `{net}` as an expression and the build errors. Use the `<Math tex="F_{net}=0" />` component (string prop → braces safe). `display` prop for block math.
 
 ## Log (append one line per session/batch — newest at top)
+- 2026-06-05 — Zones D+E+F+G done (D1–D4, E1–E7, F1–F5, G1–G4) + real `404.astro`. Build clean, 44 pages.
 - 2026-06-05 — Zone B (B1) + Zone C (C1–C12) done + added `SessionBar.astro` (session shell via Layout `header` slot). Build clean, 23 pages.
 - 2026-06-05 — Zone A done (A1–A8, 9 screens) + added `Math.astro` (KaTeX-safe braces). Build clean, 10 pages.
 - 2026-06-05 — Phase 0 scaffold complete: Astro 6 + Tailwind v4 (PostCSS) + KaTeX + Bangla font; Layout + 13 shared components + index directory (58 screens) + screens.js registry; `npm run build` clean. (See "Stack notes" — Tailwind is PostCSS, not the vite plugin.)

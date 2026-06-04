@@ -1,0 +1,40 @@
+---
+/* E5 Notes library + flashcards — all saved notes + auto-flashcards. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+
+const notes = [
+  { o: 'Acceleration', body: 'ত্বরণ = বেগের পরিবর্তন ÷ সময়। শুরুর বেগ ০ ধরো।', kind: 'highlight' },
+  { o: 'Velocity', body: 'বেগ = সরণ ÷ সময়; এটা একটি ভেক্টর (vector)।', kind: 'নিজের নোট' },
+  { o: "Newton's law", body: 'F = ma — বল ভর ও ত্বরণের গুণফল।', kind: 'highlight' },
+];
+---
+<Layout title="নোট লাইব্রেরি" id="E5" active="notes">
+  <h1 class="mb-3 text-lg font-bold">🗂 আমার নোট</h1>
+
+  <div class="mb-3 flex gap-2">
+    <input type="search" placeholder="🔍 আউটকাম দিয়ে খুঁজি" class="flex-1 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs dark:border-slate-700 dark:bg-slate-800" />
+  </div>
+
+  <!-- flashcard CTA -->
+  <Card tone="sky" class="mb-3">
+    <div class="flex items-center justify-between">
+      <div><div class="text-sm font-semibold">🎴 ফ্ল্যাশকার্ড</div><div class="text-xs text-slate-500 dark:text-slate-400">১২টি কার্ড · স্বয়ংক্রিয়</div></div>
+      <Button href="/e5-notes-library" size="sm">রিভিউ শুরু</Button>
+    </div>
+  </Card>
+
+  <div class="space-y-2">
+    {notes.map((n) => (
+      <Card>
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400">{n.o}</span>
+          <Pill tone="slate">{n.kind}</Pill>
+        </div>
+        <p class="mt-1 text-sm">{n.body}</p>
+      </Card>
+    ))}
+  </div>
+</Layout>

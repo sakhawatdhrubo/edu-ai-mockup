@@ -1,0 +1,25 @@
+---
+/* E6 Worksheet / PDF export — print questions for offline/paper practice. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="ওয়ার্কশিট" id="E6" active="notes">
+  <h1 class="mb-1 text-lg font-bold">🖨 ওয়ার্কশিট বানাও</h1>
+  <p class="mb-4 text-sm text-slate-500 dark:text-slate-400">কাগজে অনুশীলনের জন্য প্রশ্ন PDF করে নাও।</p>
+
+  <Card class="mb-3">
+    <label class="text-sm font-medium">বিষয়</label>
+    <select class="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800">
+      <option>Acceleration</option><option>Velocity</option><option>Force</option>
+    </select>
+
+    <label class="mt-3 block text-sm font-medium">কয়টি প্রশ্ন</label>
+    <input type="range" min="5" max="30" value="15" class="w-full accent-indigo-600" />
+    <div class="flex justify-between text-[11px] text-slate-400"><span>৫</span><span>১৫টি</span><span>৩০</span></div>
+
+    <label class="mt-3 flex items-center gap-2 text-sm"><input type="checkbox" class="accent-indigo-600" checked /> উত্তরপত্র যোগ করো</label>
+  </Card>
+
+  <Button href="/e6-export" full>📄 PDF বানাও</Button>
+</Layout>

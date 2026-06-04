@@ -1,0 +1,35 @@
+---
+/* E4 Calibration curve — confidence vs accuracy over weeks. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Banner from '../components/Banner.astro';
+// points: [confidence%, accuracy%]
+const pts = [[20, 28], [40, 38], [60, 52], [80, 64], [95, 70]];
+const toXY = (c, a) => [20 + (c / 100) * 160, 180 - (a / 100) * 160];
+---
+<Layout title="ক্যালিব্রেশন" id="E4" active="history">
+  <h1 class="mb-1 text-lg font-bold">🎯 আত্মবিশ্বাস বনাম সঠিকতা</h1>
+  <p class="mb-4 text-xs text-slate-400">গত কয়েক সপ্তাহ</p>
+
+  <Card class="mb-3">
+    <svg viewBox="0 0 200 200" class="w-full">
+      <!-- axes -->
+      <line x1="20" y1="180" x2="180" y2="180" class="stroke-slate-300 dark:stroke-slate-600" stroke-width="1" />
+      <line x1="20" y1="20" x2="20" y2="180" class="stroke-slate-300 dark:stroke-slate-600" stroke-width="1" />
+      <!-- ideal diagonal -->
+      <line x1="20" y1="180" x2="180" y2="20" class="stroke-emerald-400" stroke-width="1.5" stroke-dasharray="4 3" />
+      <!-- student curve -->
+      <polyline
+        points={pts.map(([c, a]) => toXY(c, a).join(',')).join(' ')}
+        fill="none" class="stroke-indigo-500" stroke-width="2" />
+      {pts.map(([c, a]) => { const [x, y] = toXY(c, a); return <circle cx={x} cy={y} r="3" class="fill-indigo-600" />; })}
+      <text x="100" y="196" text-anchor="middle" class="fill-slate-400" font-size="9">আত্মবিশ্বাস →</text>
+    </svg>
+    <div class="mt-1 flex justify-center gap-3 text-[11px] text-slate-400">
+      <span>— <span class="text-emerald-500">আদর্শ</span></span>
+      <span>— <span class="text-indigo-500">তুমি</span></span>
+    </div>
+  </Card>
+
+  <Banner tone="warning" icon="ⓘ">তুমি একটু overconfident — যেখানে "খুব নিশ্চিত" বলো, সেখানে সঠিকতা একটু কম। আন্দাজের আগে এক মুহূর্ত ভাবো।</Banner>
+</Layout>

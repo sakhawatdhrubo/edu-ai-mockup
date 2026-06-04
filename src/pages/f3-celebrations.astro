@@ -1,0 +1,19 @@
+---
+/* F3 Celebrations — brief, tasteful overlay (level-up / repair). Respects
+   reduced-motion. Shown here as the level-up overlay open. */
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="উদযাপন" id="F3" rails={false} nav={false} pad={false}>
+  <div class="p-4 text-sm text-slate-400">যেকোনো স্ক্রিনের উপর ছোট উদযাপন overlay…</div>
+
+  <div class="absolute inset-0 z-50 flex items-center justify-center bg-slate-900/60 p-6">
+    <div class="w-full max-w-xs rounded-2xl bg-white p-6 text-center shadow-2xl dark:bg-slate-900">
+      <div class="text-5xl">✨</div>
+      <h1 class="mt-3 text-xl font-bold text-violet-700 dark:text-violet-300">নতুন স্তর!</h1>
+      <p class="mt-1 text-sm">Acceleration-এ তুমি এখন <span class="font-semibold">দক্ষ</span>।</p>
+      <div class="mt-2 text-xs text-slate-400">অনুশীলনকারী → দক্ষ</div>
+      <Button href="/c12-summary" full class="mt-5">দারুণ! চালিয়ে যাও</Button>
+    </div>
+  </div>
+</Layout>

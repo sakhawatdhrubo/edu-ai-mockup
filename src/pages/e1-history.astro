@@ -1,0 +1,43 @@
+---
+/* E1 History — list of past sessions & mocks. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+
+const rows = [
+  { icon: '📝', t: 'মক · একক অধ্যায়', date: '৪ জুন', meta: '১১/১৫', mock: true },
+  { icon: '▶', t: 'Acceleration', date: '৪ জুন', meta: '২৬ মি · সম্পূর্ণ', mock: false },
+  { icon: '▶', t: 'Velocity', date: '৩ জুন', meta: '১৮ মি · সম্পূর্ণ', mock: false },
+  { icon: '📝', t: 'মক · Velocity', date: '২ জুন', meta: '৮/১০', mock: true },
+];
+---
+<Layout title="ইতিহাস" id="E1" active="history">
+  <h1 class="mb-3 text-lg font-bold">📜 ইতিহাস</h1>
+
+  <!-- filter + search -->
+  <div class="mb-3 flex gap-2">
+    <div class="flex gap-1 rounded-full bg-slate-100 p-0.5 text-xs dark:bg-slate-800">
+      <button type="button" class="rounded-full bg-white px-3 py-1 font-medium shadow-sm dark:bg-slate-700">সব</button>
+      <button type="button" class="rounded-full px-3 py-1 text-slate-500">সেশন</button>
+      <button type="button" class="rounded-full px-3 py-1 text-slate-500">মক</button>
+    </div>
+    <input type="search" placeholder="🔍 খুঁজি" class="flex-1 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs dark:border-slate-700 dark:bg-slate-800" />
+  </div>
+
+  <div class="space-y-2">
+    {rows.map((r) => (
+      <a href="/e2-replay" class="block">
+        <Card pad={false} class="flex items-center gap-3 p-3">
+          <span class="grid h-9 w-9 place-items-center rounded-md bg-slate-100 dark:bg-slate-800">{r.icon}</span>
+          <div class="flex-1"><div class="text-sm font-medium">{r.t}</div><div class="text-xs text-slate-400">{r.date}</div></div>
+          <span class:list={['text-sm font-semibold', r.mock ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400']}>{r.meta}</span>
+        </Card>
+      </a>
+    ))}
+  </div>
+
+  <div class="mt-4 flex justify-center gap-2 text-xs text-slate-400">
+    <button class="rounded border border-slate-200 px-2 py-1 dark:border-slate-700">‹</button>
+    <span class="px-2 py-1">১ / ৪</span>
+    <button class="rounded border border-slate-200 px-2 py-1 dark:border-slate-700">›</button>
+  </div>
+</Layout>

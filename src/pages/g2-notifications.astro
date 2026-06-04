@@ -1,0 +1,43 @@
+---
+/* G2 Notifications center — all alerts in one place. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+
+const groups = [
+  { label: 'আজ', items: [
+    { icon: '🔁', t: 'আজকের পুনঃ-পরীক্ষা: ৩টি আউটকাম', time: '৯:০০', unread: true, href: '/c1-chooser' },
+    { icon: '📝', t: 'নতুন মক রেডি — যাচাই করো', time: '৮:১৫', unread: true, href: '/d1-mock-setup' },
+  ]},
+  { label: 'গতকাল', items: [
+    { icon: '🔥', t: 'streak ৭ দিন — দারুণ!', time: '২০:১০', unread: true, href: '/f1-streak' },
+    { icon: '👨‍👩‍👧', t: 'অভিভাবক তোমার অগ্রগতি দেখেছেন', time: '১৯:৩০', unread: false, href: '/h8-parent-digest' },
+    { icon: '⚙️', t: 'নতুন device থেকে login হয়েছে', time: '১০:০৫', unread: false, href: '/h4-settings' },
+  ]},
+];
+---
+<Layout title="নোটিফিকেশন" id="G2" active="home">
+  <div class="mb-3 flex items-center justify-between">
+    <h1 class="text-lg font-bold">🔔 নোটিফিকেশন</h1>
+    <button type="button" class="text-xs text-indigo-600 dark:text-indigo-400">সব পড়া হিসেবে চিহ্নিত করো</button>
+  </div>
+
+  {groups.map((g) => (
+    <section class="mb-4">
+      <h2 class="mb-1.5 text-xs font-semibold uppercase text-slate-400">{g.label}</h2>
+      <div class="space-y-1.5">
+        {g.items.map((n) => (
+          <a href={n.href} class="block">
+            <Card pad={false} class="flex items-center gap-3 p-3">
+              <span class="grid h-8 w-8 place-items-center rounded-md bg-slate-100 dark:bg-slate-800">{n.icon}</span>
+              <span class="flex-1 text-sm">{n.t}</span>
+              <span class="text-[11px] text-slate-400">{n.time}</span>
+              {n.unread && <span class="h-2 w-2 rounded-full bg-indigo-500"></span>}
+            </Card>
+          </a>
+        ))}
+      </div>
+    </section>
+  ))}
+
+  <p class="text-center text-xs text-slate-400">শান্ত-সময় (quiet hours) সেট করো → <a href="/h6-notifications-prefs" class="underline">প্রেফারেন্স</a></p>
+</Layout>

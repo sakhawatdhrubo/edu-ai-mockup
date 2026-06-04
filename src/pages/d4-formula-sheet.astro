@@ -1,0 +1,55 @@
+---
+/* D4 Formula sheet — overlay (slide-in from the right). Quick formula reference;
+   mirrors the sheet allowed in the real SSC exam. Shown open over the session. */
+import Layout from '../layouts/Layout.astro';
+import Math from '../components/Math.astro';
+import Banner from '../components/Banner.astro';
+
+const formulas = [
+  { bn: 'ত্বরণ', en: 'acceleration', tex: 'a = \\dfrac{v - u}{t}', unit: 'm/s²' },
+  { bn: 'গড় বেগ', en: 'average velocity', tex: 'v_{avg} = \\dfrac{s}{t}', unit: 'm/s' },
+  { bn: 'সরণ (১)', en: 'displacement', tex: 's = ut + \\tfrac{1}{2}at^2', unit: 'm' },
+  { bn: 'গতির সমীকরণ', en: 'eqn of motion', tex: 'v^2 = u^2 + 2as', unit: '' },
+  { bn: 'বল', en: 'force', tex: 'F = ma', unit: 'N' },
+  { bn: 'ভরবেগ', en: 'momentum', tex: 'p = mv', unit: 'kg·m/s' },
+];
+---
+<Layout title="ফর্মুলা শিট" id="D4" rails={false} nav={false} pad={false}>
+  <!-- base screen hint behind the overlay -->
+  <div class="p-4 text-sm text-slate-400">মক / সেশন স্ক্রিনের উপর ফর্মুলা প্যানেল খোলা…</div>
+
+  <!-- overlay: backdrop + right-docked panel -->
+  <div class="absolute inset-0 z-50 flex justify-end bg-slate-900/40">
+    <a href="/d2-mock-runner" class="absolute inset-0" aria-label="বন্ধ করো"></a>
+    <aside class="relative flex h-full w-[88%] max-w-md flex-col bg-white shadow-2xl dark:bg-slate-900">
+      <!-- header -->
+      <div class="flex items-center gap-2 border-b border-slate-200 px-4 py-3 dark:border-slate-800">
+        <h2 class="text-sm font-bold">📘 ফর্মুলা</h2>
+        <a href="/d2-mock-runner" aria-label="বন্ধ করো" class="ml-auto grid h-8 w-8 place-items-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">✕</a>
+      </div>
+
+      <!-- scope toggle -->
+      <label class="flex items-center gap-2 border-b border-slate-100 px-4 py-2 text-xs dark:border-slate-800">
+        <input type="checkbox" class="accent-emerald-600" /> সব অধ্যায় <span class="text-slate-400">(এখন: Motion)</span>
+      </label>
+
+      <!-- mock notice -->
+      <div class="px-4 pt-3">
+        <Banner tone="warning" icon="🎓">মক পরীক্ষায় ফর্মুলা শিট দেখা যাচ্ছে — কেবল রেফারেন্সের জন্য।</Banner>
+      </div>
+
+      <!-- formula list -->
+      <div class="flex-1 space-y-2 overflow-y-auto px-4 py-3">
+        {formulas.map((f) => (
+          <div class="rounded-md border border-slate-200 p-3 dark:border-slate-700">
+            <div class="text-sm font-semibold">{f.bn} <span class="font-normal text-slate-400">({f.en})</span></div>
+            <div class="mt-1"><Math tex={f.tex} display /></div>
+            {f.unit && <div class="mt-1 text-xs text-slate-400">একক: {f.unit}</div>}
+          </div>
+        ))}
+      </div>
+
+      <p class="border-t border-slate-100 px-4 py-2 text-center text-[11px] text-slate-400 dark:border-slate-800">states: লোড হচ্ছে… · ফর্মুলা লোড করা যাচ্ছে না। · কোনো ফর্মুলা পাওয়া যায়নি।</p>
+    </aside>
+  </div>
+</Layout>

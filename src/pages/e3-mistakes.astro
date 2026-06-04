@@ -1,0 +1,33 @@
+---
+/* E3 Weekly mistake log — 4-week rolling list of what went wrong, grouped by
+   misconception. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+
+const groups = [
+  { m: 'mass ↔ weight গুলিয়ে ফেলা', n: 3, status: 'active', tone: 'rose', items: ['ওজন = ভর × g ভুলে যাওয়া', 'kg বনাম N মিশিয়ে ফেলা'] },
+  { m: 'বল ছাড়া গতি থাকতে পারে না', n: 2, status: 'কমছে', tone: 'amber', items: ['মহাকাশে গতি নিয়ে ভুল'] },
+  { m: 'ত্বরণ = বেগ ÷ সময়', n: 1, status: 'repaired ✓', tone: 'emerald', items: ['শুরুর বেগ বাদ দেওয়া'] },
+];
+---
+<Layout title="ভুলের খাতা" id="E3" active="history">
+  <h1 class="mb-1 text-lg font-bold">🧠 ভুলের খাতা</h1>
+  <p class="mb-4 text-xs text-slate-400">গত ৪ সপ্তাহ · ভুল-বোঝা অনুযায়ী সাজানো</p>
+
+  <div class="space-y-3">
+    {groups.map((g) => (
+      <Card tone={g.tone}>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-semibold">{g.m}</span>
+          <Pill tone={g.tone}>{g.status}</Pill>
+        </div>
+        <ul class="mt-2 space-y-1 text-xs text-slate-600 dark:text-slate-300">
+          {g.items.map((it) => <li>• {it}</li>)}
+        </ul>
+        {g.status !== 'repaired ✓' && <Button href="/c2-greeting" variant="secondary" size="sm" class="mt-2">এখনই ঠিক করি →</Button>}
+      </Card>
+    ))}
+  </div>
+</Layout>

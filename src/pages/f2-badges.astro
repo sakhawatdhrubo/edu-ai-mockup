@@ -1,0 +1,29 @@
+---
+/* F2 Badge wall / milestones — earned achievements + locked previews. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+
+const badges = [
+  { icon: '🔥', t: '৩০ দিন', earned: true },
+  { icon: '✨', t: 'Transfer-verified', earned: true },
+  { icon: '🛠', t: 'প্রথম repair', earned: true },
+  { icon: '🎯', t: 'প্রথম মক', earned: true },
+  { icon: '📚', t: 'Chapter master', earned: false },
+  { icon: '💯', t: '১০০ দিন', earned: false },
+  { icon: '🏆', t: '৩৬৫ দিন', earned: false },
+  { icon: '🧠', t: '১০ repair', earned: false },
+];
+---
+<Layout title="ব্যাজ" id="F2" active="home">
+  <h1 class="mb-1 text-lg font-bold">🏅 অর্জন</h1>
+  <p class="mb-4 text-sm text-slate-500 dark:text-slate-400">শেখার সাথে আসা milestone — শুধু পড়লেই মেলে।</p>
+
+  <div class="grid grid-cols-3 gap-2">
+    {badges.map((b) => (
+      <Card pad={false} class:list={['flex flex-col items-center gap-1 py-4 text-center', !b.earned && 'opacity-40']}>
+        <span class="text-2xl">{b.earned ? b.icon : '🔒'}</span>
+        <span class="text-[11px] font-medium">{b.t}</span>
+      </Card>
+    ))}
+  </div>
+</Layout>

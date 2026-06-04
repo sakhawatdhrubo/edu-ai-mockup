@@ -1,0 +1,39 @@
+---
+/* G3 Invite a friend / referral — student shares the app (growth loop). */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+
+const friends = [
+  { name: 'তানভীর', status: 'যোগ দিয়েছে ✓', tone: 'text-emerald-600 dark:text-emerald-400' },
+  { name: 'মীম', status: 'আমন্ত্রণ পাঠানো হয়েছে', tone: 'text-slate-400' },
+];
+---
+<Layout title="আমন্ত্রণ" id="G3" active="home">
+  <h1 class="mb-1 text-lg font-bold">🎁 বন্ধুকে আমন্ত্রণ করো</h1>
+  <p class="mb-4 text-sm text-slate-500 dark:text-slate-400">দুজনেই ৭ দিন Pro পাবে।</p>
+
+  <Card class="mb-3">
+    <p class="text-xs text-slate-400">তোমার রেফারেল কোড</p>
+    <div class="mt-1 flex items-center gap-2">
+      <span class="flex-1 rounded-md bg-slate-100 px-3 py-2 font-mono text-lg font-bold tracking-wider dark:bg-slate-800">RIFAT24</span>
+      <Button size="sm">কপি করো</Button>
+    </div>
+  </Card>
+
+  <div class="mb-4 grid grid-cols-3 gap-2">
+    <a href="#" class="rounded-md border border-slate-200 py-2.5 text-center text-xs dark:border-slate-700">💬 WhatsApp</a>
+    <a href="#" class="rounded-md border border-slate-200 py-2.5 text-center text-xs dark:border-slate-700">💙 Messenger</a>
+    <a href="#" class="rounded-md border border-slate-200 py-2.5 text-center text-xs dark:border-slate-700">✉️ SMS</a>
+  </div>
+
+  <h2 class="mb-2 text-sm font-bold">আমন্ত্রিত বন্ধু</h2>
+  <div class="space-y-1.5">
+    {friends.map((f) => (
+      <Card pad={false} class="flex items-center justify-between p-3">
+        <span class="text-sm">{f.name}</span>
+        <span class:list={['text-xs', f.tone]}>{f.status}</span>
+      </Card>
+    ))}
+  </div>
+</Layout>

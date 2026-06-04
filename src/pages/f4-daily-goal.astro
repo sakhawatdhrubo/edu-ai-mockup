@@ -1,0 +1,28 @@
+---
+/* F4 Daily goal — tiny self-set target. Set on first daily visit. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+
+const goals = [
+  { t: '১টা session', d: '~১৫ মিনিট', sel: true },
+  { t: '২টা session', d: '~৩০ মিনিট', sel: false },
+  { t: '১টা মক', d: '~৩০ মিনিট', sel: false },
+];
+---
+<Layout title="দৈনিক লক্ষ্য" id="F4" active="home">
+  <h1 class="mb-1 text-lg font-bold">🎯 আজকের লক্ষ্য</h1>
+  <p class="mb-4 text-sm text-slate-500 dark:text-slate-400">ছোট লক্ষ্য সবচেয়ে ভালো কাজ করে। আজ কতটুকু?</p>
+
+  <div class="space-y-2">
+    {goals.map((g) => (
+      <label class:list={['flex items-center gap-3 rounded-md border px-4 py-3 min-h-touch', g.sel ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10' : 'border-slate-200 dark:border-slate-700']}>
+        <input type="radio" name="goal" class="accent-indigo-600" checked={g.sel} />
+        <div class="flex-1"><div class="text-sm font-medium">{g.t}</div><div class="text-xs text-slate-400">{g.d}</div></div>
+      </label>
+    ))}
+  </div>
+
+  <Button href="/b1-dashboard" full class="mt-4">লক্ষ্য সেট করো</Button>
+  <p class="mt-3 text-center text-xs text-slate-400">সন্ধ্যায় মনে করিয়ে দেব — শুধু একবার, কোনো চাপ নয়।</p>
+</Layout>

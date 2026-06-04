@@ -1,0 +1,31 @@
+---
+/* E7 Concept search — find any concept fast. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+
+const results = [
+  { bn: 'ত্বরণ', en: 'acceleration', m: 78, tier: 'দক্ষ', tone: 'emerald' },
+  { bn: 'ঋণাত্মক ত্বরণ', en: 'deceleration', m: 22, tier: 'অনুসন্ধানী', tone: 'slate' },
+  { bn: 'কৌণিক ত্বরণ', en: 'angular accel.', m: 0, tier: 'নতুন', tone: 'slate' },
+];
+---
+<Layout title="খুঁজি" id="E7" active="learn">
+  <h1 class="mb-3 text-lg font-bold">🔍 concept খুঁজি</h1>
+  <input type="search" value="ত্বরণ" class="mb-4 w-full rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+
+  <div class="space-y-2">
+    {results.map((r) => (
+      <Card>
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-sm font-semibold">{r.bn} <span class="font-normal text-slate-400">({r.en})</span></div>
+            <div class="mt-0.5 text-xs text-slate-400">mastery {r.m}% · <Pill tone={r.tone}>{r.tier}</Pill></div>
+          </div>
+          <Button href="/c2-greeting" size="sm">শুরু করো</Button>
+        </div>
+      </Card>
+    ))}
+  </div>
+</Layout>
