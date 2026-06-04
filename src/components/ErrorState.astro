@@ -1,0 +1,11 @@
+---
+/* Shared Error state (§1.5) — rose inline text + retry; widget-level, never a
+   whole-page crash. Default copy from Appendix C. */
+interface Props { msg?: string; retryHref?: string }
+const { msg = 'একটু সমস্যা হলো, আবার চেষ্টা করো।', retryHref = '#' } = Astro.props;
+---
+<div class="flex items-center gap-2 rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-700 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-300">
+  <span aria-hidden="true">⚠</span>
+  <span class="flex-1">{msg}</span>
+  <a href={retryHref} class="font-semibold underline">আবার চেষ্টা</a>
+</div>

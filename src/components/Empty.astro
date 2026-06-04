@@ -1,0 +1,12 @@
+---
+/* Shared Empty state (§1.5) — friendly line + exactly one CTA to the next
+   action (never a dead empty box). */
+import Button from './Button.astro';
+interface Props { icon?: string; msg: string; ctaLabel?: string; ctaHref?: string }
+const { icon = '🌱', msg, ctaLabel, ctaHref } = Astro.props;
+---
+<div class="flex flex-col items-center gap-3 py-10 text-center">
+  <span class="text-3xl" aria-hidden="true">{icon}</span>
+  <p class="text-sm text-slate-500 dark:text-slate-400">{msg}</p>
+  {ctaLabel && ctaHref && <Button href={ctaHref} size="sm">{ctaLabel}</Button>}
+</div>

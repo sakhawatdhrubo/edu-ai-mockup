@@ -1,0 +1,11 @@
+---
+/* Shared Loading state (§1.5) — skeleton shimmer rows + "লোড হচ্ছে…". */
+interface Props { rows?: number; label?: string }
+const { rows = 3, label = 'লোড হচ্ছে…' } = Astro.props;
+---
+<div class="space-y-2" aria-busy="true" aria-label={label}>
+  {Array.from({ length: rows }).map(() => (
+    <div class="skeleton h-6 w-full rounded-md bg-slate-200 dark:bg-slate-700"></div>
+  ))}
+  <p class="pt-1 text-center text-xs text-slate-400">{label}</p>
+</div>

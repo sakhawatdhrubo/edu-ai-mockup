@@ -1,0 +1,27 @@
+---
+/* Progress bar (§1.4). Mastery % stays neutral slate by default (§1.6 —
+   color lives on the skill-tier badge, not the raw bar). */
+interface Props {
+  value: number;       // 0..max
+  max?: number;
+  tone?: 'slate' | 'indigo' | 'emerald' | 'amber' | 'rose' | 'violet';
+  label?: string;
+  class?: string;
+}
+const { value, max = 100, tone = 'slate', label, class: cls = '' } = Astro.props;
+const pct = Math.max(0, Math.min(100, Math.round((value / max) * 100)));
+const fills = {
+  slate: 'bg-slate-400 dark:bg-slate-500',
+  indigo: 'bg-indigo-500',
+  emerald: 'bg-emerald-500',
+  amber: 'bg-amber-500',
+  rose: 'bg-rose-500',
+  violet: 'bg-violet-500',
+};
+---
+<div class={cls}>
+  {label && <div class="mb-1 flex justify-between text-xs text-slate-500 dark:text-slate-400"><span>{label}</span><span>{pct}%</span></div>}
+  <div class="h-2.5 w-full overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700" role="progressbar" aria-valuenow={pct} aria-valuemin="0" aria-valuemax="100">
+    <div class:list={['h-full rounded-full transition-[width]', fills[tone]]} style={`width:${pct}%`}></div>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+---
+/* Floating "📘 ফর্মুলা" button (D4) — bottom-right, emerald. Present on any
+   session (C*) and mock (D2). Opens the formula sheet overlay. */
+interface Props { href?: string }
+const { href = '/d4-formula-sheet' } = Astro.props;
+---
+<a
+  href={href}
+  aria-label="ফর্মুলা শিট"
+  class="fixed bottom-24 right-3 z-30 flex h-12 min-h-touch items-center gap-1.5 rounded-full bg-emerald-600 px-4 text-sm font-semibold text-white shadow-lg hover:bg-emerald-700"
+>
+  📘 ফর্মুলা
+</a>

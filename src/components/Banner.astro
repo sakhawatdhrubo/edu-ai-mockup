@@ -1,0 +1,25 @@
+---
+/* Banner (§1.4 / §1.5 / C9). tone = role color. Dismissible adds a ✕.
+   Pairs an icon with text — never emoji-only (§1.6). */
+interface Props {
+  tone?: 'info' | 'success' | 'warning' | 'error' | 'violet';
+  icon?: string;
+  dismissible?: boolean;
+  class?: string;
+}
+const { tone = 'info', icon = 'ⓘ', dismissible = false, class: cls = '' } = Astro.props;
+const tones = {
+  info: 'bg-sky-50 border-sky-200 text-sky-900 dark:bg-sky-500/10 dark:border-sky-500/30 dark:text-sky-200',
+  success: 'bg-emerald-50 border-emerald-200 text-emerald-900 dark:bg-emerald-500/10 dark:border-emerald-500/30 dark:text-emerald-200',
+  warning: 'bg-amber-50 border-amber-200 text-amber-900 dark:bg-amber-500/10 dark:border-amber-500/30 dark:text-amber-200',
+  error: 'bg-rose-50 border-rose-200 text-rose-900 dark:bg-rose-500/10 dark:border-rose-500/30 dark:text-rose-200',
+  violet: 'bg-violet-50 border-violet-200 text-violet-900 dark:bg-violet-500/10 dark:border-violet-500/30 dark:text-violet-200',
+};
+---
+<div class:list={['flex items-start gap-2 rounded-md border px-3 py-2 text-sm', tones[tone], cls]} role="status">
+  <span aria-hidden="true" class="leading-6">{icon}</span>
+  <div class="flex-1"><slot /></div>
+  {dismissible && (
+    <button type="button" aria-label="বন্ধ করো" onclick="this.closest('[role=status]').remove()" class="grid h-6 w-6 place-items-center rounded hover:bg-black/5 dark:hover:bg-white/10">✕</button>
+  )}
+</div>

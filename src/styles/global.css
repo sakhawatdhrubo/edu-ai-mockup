@@ -1,0 +1,46 @@
+/* ── edu-ai student mockup — global styles (§1.1 visual language) ──
+   Role → Tailwind family (used directly via utilities):
+     primary/active → indigo · success/correct → emerald · error/wrong → rose
+     warning/nudge → amber · special unlock → violet · info → sky · neutral → slate
+   Every role has a dark-mode variant via the class-based `dark` variant below. */
+
+@import "tailwindcss";
+
+/* Bangla type — Noto Sans Bengali loaded via Google Fonts <link> in Layout
+   head (robust for a static mockup); system-ui is the offline fallback. */
+
+/* Class-based dark mode so the 🌙 rail toggle works (not just OS preference). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-bangla: "Noto Sans Bengali", "SolaimanLipi", system-ui, sans-serif;
+  /* 44px minimum touch target (§1.1) → enables min-h-touch / min-w-touch / p-touch */
+  --spacing-touch: 2.75rem;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-bangla);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-slate-100 text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+    line-height: 1.7; /* relaxed for Bangla */
+  }
+  h1, h2, h3 { @apply font-bold leading-snug; }
+  /* Respect reduced-motion globally (§1.1 / §1.6) */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* Skeleton shimmer for the shared Loading state (§1.5) */
+@keyframes shimmer { 0% { opacity: .55 } 50% { opacity: 1 } 100% { opacity: .55 } }
+.skeleton { animation: shimmer 1.4s ease-in-out infinite; }
+
+/* KaTeX should never overflow the phone column */
+.katex { font-size: 1.05em; }
+.katex-display { overflow-x: auto; overflow-y: hidden; }

@@ -18,14 +18,22 @@ Static, clickable UI mockup of the full **student journey** for the Onnorokom Ed
 - **Finish fully, in batches.** After each screen (or small batch), tick it below + append a Log line + commit. Never leave the tracker stale.
 - Pick realistic placeholder content (a "Motion / Acceleration" physics example throughout) so screens feel real.
 
+## Stack notes (learned during scaffold — read before changing build)
+- **Astro 6** ships **rolldown-vite**, which is currently INCOMPATIBLE with `@tailwindcss/vite` (error: `Missing field tsconfigPaths`). So Tailwind v4 is wired via **PostCSS** instead: `@tailwindcss/postcss` in `postcss.config.mjs`, `@import "tailwindcss"` in `src/styles/global.css`. Do NOT re-add `@tailwindcss/vite`.
+- **Tailwind v4** (no `tailwind.config.js`): tokens live in `global.css` `@theme` (font-bangla, spacing-touch=44px) and class-based dark via `@custom-variant dark`. Role colors use default Tailwind families directly (indigo/emerald/rose/amber/violet/sky/slate) — no custom palette needed.
+- **Bangla font**: Google Fonts `<link>` in `Layout.astro` head (NOT @fontsource — its relative `url()` refs don't resolve in the static build). system-ui fallback.
+- **Math**: KaTeX via CDN + auto-render in `Layout.astro` (`\( inline \)` / `$$ display $$`).
+- **Phone frame**: `Layout.astro` centers a `max-w-[420px]` column (phone on desktop, full-width on mobile). Props: `title, id, rails, nav, active, pad`.
+- Build check: `npm run build` (passes clean). Dev: `npm run dev` → localhost:4321.
+
 ## Build order
-**Phase 0 — Scaffold (do first):**
-- [ ] `npm create astro` (empty/minimal, TypeScript) + add `@astrojs/tailwind`
-- [ ] `tailwind.config` tokens from §1.1 (indigo/emerald/rose/amber/violet/sky/slate roles) + dark mode + `min-h-touch`/`min-w-touch` (44px)
-- [ ] Bangla font (Noto Sans Bengali) wired (Google Fonts or local) + base styles
-- [ ] Shared components: `Layout`, `TopRails` (§1.2), `BottomNav` (§1.3), `Button`, `Card`, `Banner`, `Modal`, `Toast`, `Pill`, `ProgressBar`, state partials (Loading/Empty/Error per §1.5)
-- [ ] `src/pages/index.astro` — clickable directory of ALL screens, grouped by zone A–I (this is the prototype home)
-- [ ] confirm `npm run dev` serves + `npm run build` passes
+**Phase 0 — Scaffold — ✅ DONE:**
+- [x] Astro 6 + Tailwind v4 (PostCSS) + TypeScript scaffolded; `npm run build` passes clean
+- [x] §1.1 tokens in `global.css` `@theme` + class dark mode + `min-h-touch` (44px)
+- [x] Bangla font (Noto Sans Bengali via Google Fonts) + base styles + reduced-motion
+- [x] Shared components: `Layout`, `TopRails` (§1.2), `BottomNav` (§1.3), `Button`, `Card`, `Banner`, `Modal`, `Toast`, `Pill`, `ProgressBar`, `Why`, `FormulaFab`, state partials `Loading`/`Empty`/`ErrorState` (§1.5)
+- [x] `src/pages/index.astro` — clickable directory of ALL 58 screens, grouped by zone A–I (prototype home) + `src/data/screens.js` registry
+- [x] `npm run build` passes
 
 **Phase 1 — Screens** (tick when the page exists, renders, and links from index):
 
@@ -109,7 +117,7 @@ Zone I — Billing
 - [ ] dark-mode pass · [ ] mobile (~390px) pass on every page · [ ] index complete + all links work · [ ] `npm run build` clean
 
 ## Current next step
-> **Start Phase 0 — scaffold the Astro project.** Nothing built yet.
+> **Phase 1 — Zone A screens.** Scaffold done + builds clean. Build A1–A8 next (one Astro page per screen ID, reuse the shared components, link each from index).
 
 ## Log (append one line per session/batch — newest at top)
-- (empty — first build session writes here)
+- 2026-06-05 — Phase 0 scaffold complete: Astro 6 + Tailwind v4 (PostCSS) + KaTeX + Bangla font; Layout + 13 shared components + index directory (58 screens) + screens.js registry; `npm run build` clean. (See "Stack notes" — Tailwind is PostCSS, not the vite plugin.)

@@ -1,0 +1,22 @@
+---
+/* Card (§1.4). tone tints the card with a role color (-50 bg + -200 border). */
+interface Props {
+  tone?: 'plain' | 'indigo' | 'emerald' | 'rose' | 'amber' | 'violet' | 'sky' | 'slate';
+  class?: string;
+  pad?: boolean;
+}
+const { tone = 'plain', class: cls = '', pad = true } = Astro.props;
+const tones = {
+  plain: 'bg-white border-slate-200 dark:bg-slate-900 dark:border-slate-800',
+  indigo: 'bg-indigo-50 border-indigo-200 dark:bg-indigo-500/10 dark:border-indigo-500/30',
+  emerald: 'bg-emerald-50 border-emerald-200 dark:bg-emerald-500/10 dark:border-emerald-500/30',
+  rose: 'bg-rose-50 border-rose-200 dark:bg-rose-500/10 dark:border-rose-500/30',
+  amber: 'bg-amber-50 border-amber-200 dark:bg-amber-500/10 dark:border-amber-500/30',
+  violet: 'bg-violet-50 border-violet-200 dark:bg-violet-500/10 dark:border-violet-500/30',
+  sky: 'bg-sky-50 border-sky-200 dark:bg-sky-500/10 dark:border-sky-500/30',
+  slate: 'bg-slate-50 border-slate-200 dark:bg-slate-800/50 dark:border-slate-700',
+};
+---
+<div class:list={['rounded-md border', pad && 'p-4', tones[tone], cls]}>
+  <slot />
+</div>

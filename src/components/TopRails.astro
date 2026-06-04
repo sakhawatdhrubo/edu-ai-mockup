@@ -1,0 +1,25 @@
+---
+/* §1.2 Global top rails. Phone-compact: logo · 🔍 🔔 🌙 🔥 · profile.
+   Utilities collapse but the streak stays visible. */
+interface Props { active?: string }
+const { active = '' } = Astro.props;
+---
+<header class="sticky top-0 z-40 flex items-center gap-2 border-b border-slate-200 bg-white/95 px-3 py-2 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
+  <a href="/b1-dashboard" class="mr-auto flex items-center gap-1.5 font-bold text-indigo-600 dark:text-indigo-400">
+    <span class="grid h-7 w-7 place-items-center rounded-md bg-indigo-600 text-sm text-white">e</span>
+    <span class="text-sm">edu-ai</span>
+  </a>
+
+  <a href="/e7-concept-search" aria-label="খুঁজি" class="grid h-9 w-9 place-items-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">🔍</a>
+
+  <a href="/g2-notifications" aria-label="নোটিফিকেশন" class="relative grid h-9 w-9 place-items-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">
+    🔔
+    <span class="absolute right-0.5 top-0.5 grid h-4 min-w-4 place-items-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">3</span>
+  </a>
+
+  <button type="button" onclick="toggleDark()" aria-label="ডার্ক মোড" class="grid h-9 w-9 place-items-center rounded-md hover:bg-slate-100 dark:hover:bg-slate-800">🌙</button>
+
+  <a href="/f1-streak" aria-label="স্ট্রিক" class="flex h-9 items-center gap-1 rounded-md bg-amber-50 px-2 text-sm font-semibold text-amber-700 dark:bg-amber-500/10 dark:text-amber-400">🔥 ৭</a>
+
+  <a href="/h4-settings" aria-label="প্রোফাইল" class="grid h-9 w-9 place-items-center rounded-full bg-slate-200 text-sm font-semibold text-slate-700 dark:bg-slate-700 dark:text-slate-200">রি</a>
+</header>

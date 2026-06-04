@@ -1,0 +1,28 @@
+---
+/* Modal / overlay (§1.4). Used for confirm dialogs, Report (H1), Limit (I3),
+   Celebrations (F3). Rendered inside the phone column as an absolute overlay —
+   in this static mockup it shows open; ✕ / backdrop link back via closeHref. */
+interface Props {
+  title?: string;
+  closeHref?: string;     // where ✕ / backdrop returns to
+  sheet?: boolean;        // bottom-sheet style instead of centered
+  class?: string;
+}
+const { title, closeHref = '/', sheet = false, class: cls = '' } = Astro.props;
+---
+<div class="absolute inset-0 z-50 flex bg-slate-900/50 backdrop-blur-sm" class:list={[sheet ? 'items-end' : 'items-center justify-center p-4']}>
+  <a href={closeHref} class="absolute inset-0" aria-label="বন্ধ করো"></a>
+  <div class:list={[
+    'relative w-full bg-white shadow-2xl dark:bg-slate-900',
+    sheet ? 'rounded-t-2xl p-4' : 'max-w-sm rounded-xl p-5',
+    cls,
+  ]}>
+    {(title || closeHref) && (
+      <div class="mb-3 flex items-center gap-2">
+        {title && <h2 class="text-base font-bold">{title}</h2>}
+        <a href={closeHref} aria-label="বন্ধ করো" class="ml-auto grid h-8 w-8 place-items-center rounded-md text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">✕</a>
+      </div>
+    )}
+    <slot />
+  </div>
+</div>

@@ -1,0 +1,14 @@
+---
+/* Toast (§1.5) — transient confirmation, bottom-center. Shown statically here
+   to demonstrate the state. */
+interface Props { tone?: 'slate' | 'emerald' | 'rose'; class?: string }
+const { tone = 'slate', class: cls = '' } = Astro.props;
+const tones = {
+  slate: 'bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900',
+  emerald: 'bg-emerald-600 text-white',
+  rose: 'bg-rose-600 text-white',
+};
+---
+<div class:list={['pointer-events-none absolute bottom-28 left-1/2 z-50 -translate-x-1/2 rounded-full px-4 py-2 text-sm font-medium shadow-lg', tones[tone], cls]}>
+  <slot />
+</div>
