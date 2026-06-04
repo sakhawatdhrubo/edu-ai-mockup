@@ -1,0 +1,40 @@
+---
+/* A2.5 Account recovery — public. Escalating recovery so a lost device never
+   locks a student out. */
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import Pill from '../components/Pill.astro';
+const paths = [
+  { n: '১', t: 'পাসওয়ার্ড ভুলে গেছি', d: 'ফোনে SMS OTP → নতুন পাসওয়ার্ড সেট করো।', cta: 'OTP পাঠাও', tone: 'indigo' },
+  { n: '২', t: 'ফোন হারিয়েছি', d: 'account-এ ইমেইল থাকলে সেখানে reset লিংক পাঠাব।', cta: 'ইমেইলে reset', tone: 'sky' },
+  { n: '৩', t: 'ফোন ও SIM দুটোই নেই', d: 'পরিচয় যাচাই করে support টিকেট (নাম · স্কুল · জন্মতারিখ · শেষ session)।', cta: 'টিকেট খোলো', tone: 'amber' },
+  { n: '৪', t: 'নতুন device, একই নম্বর', d: 'একই নম্বরে লগইন করলে তোমার সব data ফিরে আসবে।', cta: 'লগইনে যাও', tone: 'emerald' },
+];
+---
+<Layout title="Recovery" id="A2.5" rails={false} nav={false}>
+  <div class="py-4">
+    <a href="/a2-login" class="text-sm text-slate-500 dark:text-slate-400">← লগইন</a>
+    <h1 class="mt-2 text-xl font-bold">account ফিরে পাও</h1>
+    <p class="mb-4 text-sm text-slate-500 dark:text-slate-400">তোমার অবস্থা বেছে নাও — আমরা ধাপে ধাপে সাহায্য করব।</p>
+
+    <div class="space-y-3">
+      {paths.map((p) => (
+        <Card>
+          <div class="flex items-start gap-3">
+            <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-slate-100 text-sm font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-300">{p.n}</span>
+            <div class="flex-1">
+              <h2 class="text-sm font-semibold">{p.t}</h2>
+              <p class="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{p.d}</p>
+              <Button href={p.cta === 'লগইনে যাও' ? '/a2-login' : '/a4-consent'} variant="secondary" size="sm" class="mt-2">{p.cta}</Button>
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+
+    <p class="mt-4 text-center text-xs text-slate-400">
+      <Pill tone="slate">states</Pill> OTP পাঠানো হয়েছে · ভুল OTP · locked (countdown) · ইমেইল পাঠানো হয়েছে · টিকেট জমা হয়েছে
+    </p>
+  </div>
+</Layout>

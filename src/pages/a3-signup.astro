@@ -1,0 +1,46 @@
+---
+/* A3 Signup — public. Create account (phone-as-username). */
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="Signup" id="A3" rails={false} nav={false}>
+  <div class="mx-auto flex max-w-sm flex-col gap-4 py-6">
+    <div>
+      <a href="/a1-landing" class="text-sm text-slate-500 dark:text-slate-400">← ফিরে যাও</a>
+      <h1 class="mt-2 text-xl font-bold">নতুন account খোলো</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">ফোন নম্বরই তোমার পরিচয়।</p>
+    </div>
+
+    <form class="flex flex-col gap-3">
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium">নাম</span>
+        <input type="text" placeholder="তোমার নাম" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium">ফোন</span>
+        <input type="tel" placeholder="01XXX-XXXXXX" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+        <span class="mt-1 block text-[11px] text-slate-400">সঠিক ১১-সংখ্যার নম্বর দাও।</span>
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium">অভিভাবকের ফোন <span class="font-normal text-slate-400">(১৮-র নিচে হলে)</span></span>
+        <input type="tel" placeholder="01XXX-XXXXXX" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+      </label>
+      <div class="grid grid-cols-2 gap-3">
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium">বয়স</span>
+          <input type="number" placeholder="১৫" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+        </label>
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium">পাসওয়ার্ড</span>
+          <input type="password" placeholder="········" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+        </label>
+      </div>
+
+      <Button href="/a4-consent" full class="mt-1">রেজিস্টার</Button>
+    </form>
+
+    <p class="text-center text-sm text-slate-500 dark:text-slate-400">
+      ইতিমধ্যে account আছে? <a href="/a2-login" class="font-medium text-indigo-600 dark:text-indigo-400">লগইন</a>
+    </p>
+  </div>
+</Layout>

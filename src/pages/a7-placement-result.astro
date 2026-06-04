@@ -1,0 +1,31 @@
+---
+/* A7 Placement result — student-friendly level read-out + first goal. */
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import Pill from '../components/Pill.astro';
+---
+<Layout title="Placement result" id="A7" rails={false} nav={false}>
+  <div class="flex min-h-[80vh] flex-col items-center justify-center py-8 text-center">
+    <span class="text-4xl">🎯</span>
+    <h1 class="mt-3 text-xl font-bold">তোমার শুরুর জায়গা পাওয়া গেছে</h1>
+    <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Acceleration দিয়ে শুরু করব — তুমি Motion-এ মাঝামাঝি।</p>
+
+    <Card class="mt-5 w-full text-left">
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-semibold">Motion</span>
+        <Pill tone="amber">শিক্ষানবিস</Pill>
+      </div>
+      <div class="mt-3 space-y-2 text-xs">
+        <div class="flex justify-between"><span class="text-slate-500">Velocity</span><span class="text-emerald-600 dark:text-emerald-400">ভালো</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Acceleration</span><span class="text-amber-600 dark:text-amber-400">শুরুর জায়গা ←</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Newton's laws</span><span class="text-slate-400">পরে</span></div>
+      </div>
+    </Card>
+
+    <div class="mt-6 flex w-full flex-col gap-2">
+      <Button href="/c2-greeting" full>টিউটর সেশন শুরু করো →</Button>
+      <a href="/b1-dashboard" class="text-sm font-medium text-slate-500 dark:text-slate-400">ড্যাশবোর্ডে যাও</a>
+    </div>
+  </div>
+</Layout>

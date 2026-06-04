@@ -1,0 +1,9 @@
+---
+/* KaTeX math wrapper. Pass TeX as a string prop so literal { } in subscripts
+   don't get parsed as Astro expressions. Rendered by the auto-render script in
+   Layout (\( inline \) / $$ display $$). Use: <Math tex="F_{net}=0" /> */
+interface Props { tex: string; display?: boolean; class?: string }
+const { tex, display = false, class: cls = '' } = Astro.props;
+const wrapped = display ? `$$${tex}$$` : `\\(${tex}\\)`;
+---
+<span class={cls}>{wrapped}</span>

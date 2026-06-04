@@ -1,0 +1,49 @@
+---
+/* A4 OTP / Consent — public. Verify phone + parental consent for minors. */
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+import Card from '../components/Card.astro';
+import Banner from '../components/Banner.astro';
+---
+<Layout title="OTP / Consent" id="A4" rails={false} nav={false}>
+  <div class="mx-auto flex max-w-sm flex-col gap-5 py-6">
+    <div>
+      <h1 class="text-xl font-bold">নম্বর যাচাই</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">01712-345678 — এ কোড পাঠানো হয়েছে।</p>
+    </div>
+
+    <!-- OTP 6-box -->
+    <div>
+      <div class="flex justify-between gap-2">
+        {['৪', '৭', '২', '', '', ''].map((d, i) => (
+          <input
+            type="text" inputmode="numeric" maxlength="1" value={d}
+            class:list={[
+              'h-12 w-full rounded-md border text-center text-lg font-bold',
+              i === 3 ? 'border-indigo-500 ring-2 ring-indigo-200 dark:ring-indigo-500/30' : 'border-slate-300 dark:border-slate-700',
+              'bg-white dark:bg-slate-800',
+            ]}
+          />
+        ))}
+      </div>
+      <div class="mt-2 flex items-center justify-between text-xs text-slate-400">
+        <span>কোড পাওনি?</span>
+        <span class="text-slate-400">আবার পাঠাও — <span class="font-mono">০:২৮</span></span>
+      </div>
+    </div>
+
+    <!-- Consent -->
+    <Card tone="slate">
+      <h2 class="text-sm font-semibold">তথ্য ব্যবহারের সম্মতি</h2>
+      <p class="mt-1 text-xs text-slate-600 dark:text-slate-400">
+        আমরা শুধু তোমার শেখা উন্নত করতে data ব্যবহার করি — কখনো বিক্রি করি না।
+        বিস্তারিত: <a href="/h12-legal" class="text-indigo-600 underline dark:text-indigo-400">প্রাইভেসি</a> ও <a href="/h12-legal" class="text-indigo-600 underline dark:text-indigo-400">শর্তাবলি</a>।
+      </p>
+    </Card>
+
+    <Banner tone="info" icon="👨‍👩‍👧">অভিভাবক এখন কাছে নেই? "পরে সম্মতি দেবেন" — তুমি আপাতত চালিয়ে যেতে পারো।</Banner>
+
+    <Button href="/a5-onboarding" full>সম্মত ও চালিয়ে যাও</Button>
+    <p class="text-center text-[11px] text-slate-400">states: OTP ভুল/expired · resend rate-limit</p>
+  </div>
+</Layout>

@@ -1,0 +1,49 @@
+---
+/* A5 Onboarding wizard — overlay after consent. One choice per screen, stepper,
+   "set later" on each. Shown here at step 4/8 (default modality pick). */
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+const steps = ['নাম', 'শ্রেণি', 'ভাষা', 'মডালিটি', '🔊', 'লক্ষ্য', 'পরীক্ষা', 'শুরু'];
+const cur = 4;
+const modalities = [
+  { icon: '🎬', label: 'ভিডিও' },
+  { icon: '📝', label: 'টেক্সট' },
+  { icon: '🧩', label: 'উদাহরণ' },
+  { icon: '💬', label: 'প্রশ্নোত্তর' },
+  { icon: '✨', label: 'অ্যানিমেশন' },
+];
+---
+<Layout title="Onboarding" id="A5" rails={false} nav={false}>
+  <div class="flex min-h-[80vh] flex-col py-4">
+    <!-- stepper -->
+    <div class="mb-1 flex items-center gap-1">
+      {steps.map((_, i) => (
+        <span class:list={['h-1.5 flex-1 rounded-full', i < cur ? 'bg-indigo-600' : i === cur ? 'bg-indigo-400' : 'bg-slate-200 dark:bg-slate-700']}></span>
+      ))}
+    </div>
+    <p class="mb-5 text-xs text-slate-400">ধাপ {cur}/৮ · সেট করা</p>
+
+    <div class="flex-1">
+      <h1 class="text-xl font-bold">কীভাবে শিখতে ভালো লাগে?</h1>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">যেকোনো একটায় ট্যাপ করে নমুনা দেখো — পরে যেকোনো সময় বদলানো যাবে।</p>
+
+      <div class="mt-5 grid grid-cols-1 gap-2">
+        {modalities.map((m, i) => (
+          <button type="button" class:list={[
+            'flex items-center gap-3 rounded-md border px-4 py-3 text-left min-h-touch',
+            i === 0 ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800',
+          ]}>
+            <span class="text-2xl">{m.icon}</span>
+            <span class="flex-1 text-sm font-medium">{m.label}</span>
+            <span class="text-xs text-indigo-600 dark:text-indigo-400">নমুনা ▶</span>
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-6 flex items-center gap-3">
+      <a href="/a6-placement" class="text-sm text-slate-400">এখন থাক →</a>
+      <Button href="/a6-placement" full class="ml-auto">পরের ধাপ →</Button>
+    </div>
+  </div>
+</Layout>

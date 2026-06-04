@@ -52,9 +52,9 @@ const { title, id = '', rails = true, nav = true, active = '', pad = true } = As
       {nav && <BottomNav active={active} />}
 
       {id && (
-        <span class="pointer-events-none fixed bottom-1 left-1 z-50 rounded bg-slate-900/70 px-1.5 py-0.5 font-mono text-[10px] text-white dark:bg-white/20">
+        <a href="/" title="স্ক্রিন ডিরেক্টরি" class="fixed bottom-1 left-1 z-50 rounded bg-slate-900/70 px-1.5 py-0.5 font-mono text-[10px] text-white hover:bg-slate-900 dark:bg-white/20">
           {id}
-        </span>
+        </a>
       )}
     </div>
 

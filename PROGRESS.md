@@ -37,16 +37,16 @@ Static, clickable UI mockup of the full **student journey** for the Onnorokom Ed
 
 **Phase 1 — Screens** (tick when the page exists, renders, and links from index):
 
-Zone A — Getting in
-- [ ] A1 Landing/Demo
-- [ ] A2 Login
-- [ ] A2.5 Account recovery
-- [ ] A3 Signup
-- [ ] A4 OTP/Consent
-- [ ] A5 Onboarding wizard
-- [ ] A6 Placement test
-- [ ] A7 Placement result
-- [ ] A8 Profile switcher
+Zone A — Getting in ✅
+- [x] A1 Landing/Demo
+- [x] A2 Login
+- [x] A2.5 Account recovery
+- [x] A3 Signup
+- [x] A4 OTP/Consent
+- [x] A5 Onboarding wizard
+- [x] A6 Placement test
+- [x] A7 Placement result
+- [x] A8 Profile switcher
 
 Zone B — Home
 - [ ] B1 Dashboard
@@ -117,7 +117,11 @@ Zone I — Billing
 - [ ] dark-mode pass · [ ] mobile (~390px) pass on every page · [ ] index complete + all links work · [ ] `npm run build` clean
 
 ## Current next step
-> **Phase 1 — Zone A screens.** Scaffold done + builds clean. Build A1–A8 next (one Astro page per screen ID, reuse the shared components, link each from index).
+> **Phase 1 — Zone B (B1 Dashboard), then Zone C.** Zone A done + builds clean (10 pages).
+
+## Gotchas (read before writing screens)
+- **Inline math/braces**: never write `\(F_{net}=0\)` directly in `.astro` markup — Astro parses `{net}` as an expression and the build errors. Use the `<Math tex="F_{net}=0" />` component (string prop → braces safe). `display` prop for block math.
 
 ## Log (append one line per session/batch — newest at top)
+- 2026-06-05 — Zone A done (A1–A8, 9 screens) + added `Math.astro` (KaTeX-safe braces). Build clean, 10 pages.
 - 2026-06-05 — Phase 0 scaffold complete: Astro 6 + Tailwind v4 (PostCSS) + KaTeX + Bangla font; Layout + 13 shared components + index directory (58 screens) + screens.js registry; `npm run build` clean. (See "Stack notes" — Tailwind is PostCSS, not the vite plugin.)

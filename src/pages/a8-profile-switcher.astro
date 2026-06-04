@@ -1,0 +1,36 @@
+---
+/* A8 Profile switcher — shared family phone. Keep each learner's progress
+   separate. Shown on app open when >1 profile exists. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+const profiles = [
+  { name: 'রিফাত', face: 'রি', last: 'গতকাল', color: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-500/15 dark:text-indigo-300', pin: false },
+  { name: 'সাদিয়া', face: 'সা', last: '৩ দিন আগে', color: 'bg-rose-100 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300', pin: true },
+];
+---
+<Layout title="Profile switcher" id="A8" rails={false} nav={false}>
+  <div class="flex min-h-[80vh] flex-col py-8">
+    <h1 class="text-center text-xl font-bold">কে পড়বে?</h1>
+    <p class="mt-1 text-center text-sm text-slate-500 dark:text-slate-400">প্রত্যেকের অগ্রগতি আলাদা থাকে।</p>
+
+    <div class="mt-6 space-y-3">
+      {profiles.map((p) => (
+        <a href="/b1-dashboard" class="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 hover:border-indigo-300 dark:border-slate-700 dark:bg-slate-800">
+          <span class:list={['grid h-12 w-12 place-items-center rounded-full text-lg font-bold', p.color]}>{p.face}</span>
+          <div class="flex-1">
+            <div class="font-semibold">{p.name}</div>
+            <div class="text-xs text-slate-400">সর্বশেষ active: {p.last}</div>
+          </div>
+          {p.pin && <span class="text-slate-400" title="PIN দরকার">🔒</span>}
+        </a>
+      ))}
+
+      <a href="/a3-signup" class="flex items-center gap-3 rounded-xl border border-dashed border-slate-300 p-3 text-slate-500 hover:border-indigo-400 dark:border-slate-600">
+        <span class="grid h-12 w-12 place-items-center rounded-full bg-slate-100 text-xl dark:bg-slate-700">+</span>
+        <span class="font-medium">নতুন প্রোফাইল</span>
+      </a>
+    </div>
+
+    <p class="mt-auto pt-6 text-center text-[11px] text-slate-400">states: single-profile → এই স্ক্রিন skip · PIN ভুল</p>
+  </div>
+</Layout>

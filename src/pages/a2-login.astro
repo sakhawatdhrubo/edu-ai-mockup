@@ -1,0 +1,35 @@
+---
+/* A2 Login — public. Sign in. */
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="Login" id="A2" rails={false} nav={false}>
+  <div class="mx-auto flex max-w-sm flex-col gap-5 py-6">
+    <div class="text-center">
+      <span class="mx-auto grid h-12 w-12 place-items-center rounded-xl bg-indigo-600 text-xl text-white">e</span>
+      <h1 class="mt-3 text-xl font-bold">আবার স্বাগতম</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">লগইন করে পড়া চালিয়ে যাও</p>
+    </div>
+
+    <form class="flex flex-col gap-3">
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium">ফোন বা ইমেইল</span>
+        <input type="text" value="01712-345678" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+      </label>
+      <label class="block">
+        <span class="mb-1 block text-sm font-medium">পাসওয়ার্ড</span>
+        <input type="password" value="········" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+      </label>
+
+      <!-- error state (inline rose) -->
+      <p class="hidden text-xs text-rose-600">ফোন বা পাসওয়ার্ড মিলছে না।</p>
+
+      <Button href="/b1-dashboard" full>লগইন করুন</Button>
+    </form>
+
+    <div class="flex items-center justify-between text-sm">
+      <a href="/a3-signup" class="font-medium text-indigo-600 dark:text-indigo-400">রেজিস্টার</a>
+      <a href="/a2-5-recovery" class="text-slate-500 dark:text-slate-400">পাসওয়ার্ড ভুলে গেছো?</a>
+    </div>
+  </div>
+</Layout>
