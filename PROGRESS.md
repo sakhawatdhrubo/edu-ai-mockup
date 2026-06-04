@@ -113,16 +113,20 @@ Zone I — Billing ✅
 - [x] I3 Limit prompt (overlay)
 - [x] I4 Invoices
 
-**Phase 2 — Polish (after all screens):**
-- [ ] dark-mode pass · [ ] mobile (~390px) pass on every page · [ ] index complete + all links work · [ ] `npm run build` clean
+**Phase 2 — Polish (after all screens): ✅**
+- [x] dark-mode pass (class toggle + dark: variants on every component; persists via localStorage)
+- [x] mobile (~390px) pass (phone-first `max-w-[420px]` column, ≥44px touch, ≤6 elements/view)
+- [x] index complete + all links work (verified: 58/58 pages exist; 0 dead internal links)
+- [x] `npm run build` clean (60 pages)
 
 ## Current next step
-> **Phase 2 — polish.** ALL 58 screens built (zones A–I) + index + 404 = 60 pages, build clean. Remaining: dark-mode pass, ~390px mobile pass, verify all index links resolve, final clean build.
+> **🎉 DONE — mockup complete.** All 58 screens (zones A–I) + index + 404 = 60 pages; build clean; all internal links resolve; dark + mobile + KaTeX wired. To preview: `npm run dev` → localhost:4321 (open `/`). Future work = visual refinement, native-Bangla copy review, or converting screens to the real React app.
 
 ## Gotchas (read before writing screens)
 - **Inline math/braces**: never write `\(F_{net}=0\)` directly in `.astro` markup — Astro parses `{net}` as an expression and the build errors. Use the `<Math tex="F_{net}=0" />` component (string prop → braces safe). `display` prop for block math.
 
 ## Log (append one line per session/batch — newest at top)
+- 2026-06-05 — Phase 2 polish done: verified 58/58 pages exist + 0 dead internal links; dark/mobile/KaTeX confirmed; final clean build (60 pages). **Mockup complete.**
 - 2026-06-05 — Zones H+I done (H1–H12, I1–I4). Parent/teacher screens use own header (separate audience). **All 58 screens built**; build clean, 60 pages. → Phase 2 polish next.
 - 2026-06-05 — Zones D+E+F+G done (D1–D4, E1–E7, F1–F5, G1–G4) + real `404.astro`. Build clean, 44 pages.
 - 2026-06-05 — Zone B (B1) + Zone C (C1–C12) done + added `SessionBar.astro` (session shell via Layout `header` slot). Build clean, 23 pages.
