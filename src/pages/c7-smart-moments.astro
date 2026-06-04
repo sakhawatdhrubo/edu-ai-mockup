@@ -1,0 +1,37 @@
+---
+/* C7 Session — smart moments (conditional). The adaptive magic; never two at
+   once. Shows the variants this slot can render. */
+import Layout from '../layouts/Layout.astro';
+import SessionBar from '../components/SessionBar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+---
+<Layout title="স্মার্ট মুহূর্ত" id="C7" rails={false} active="learn">
+  <SessionBar phase="ধাপ ৬ · চ্যালেঞ্জ" step={5} timer="০৮:৩০" slot="header" />
+
+  <!-- Active: Transfer challenge (mastery hit 0.79 cap) -->
+  <Card tone="violet" class="mb-3">
+    <div class="mb-1 flex items-center gap-2"><span>🏆</span><span class="text-sm font-bold text-violet-800 dark:text-violet-200">চ্যালেঞ্জ গ্রহণ করো</span></div>
+    <p class="text-sm">ঢাকার রাস্তায় একটি বাস ১০ সেকেন্ডে থেমে গেল — ০ থেকে ৪০ km/h থেকে। যাত্রী সামনে ঝুঁকল কেন? ত্বরণের ধারণা দিয়ে ব্যাখ্যা করো।</p>
+    <textarea rows="3" placeholder="অন্তত ৮০ অক্ষরে নিজের ভাষায় লেখো…" class="mt-3 w-full rounded-md border border-violet-200 bg-white px-3 py-2 text-sm dark:border-violet-500/30 dark:bg-slate-900"></textarea>
+    <div class="mt-2 flex items-center gap-2">
+      <Button href="/c7-smart-moments" size="sm">জমা দিন</Button>
+      <button type="button" aria-label="ভয়েস" class="grid h-9 w-9 place-items-center rounded-md border border-slate-200 dark:border-slate-700">🎤</button>
+      <a href="/c4-question" class="ml-auto text-xs text-slate-400">এখন না</a>
+    </div>
+    <div class="mt-3 rounded-md bg-white/60 p-2 text-xs dark:bg-slate-900/40">
+      পাস করলে: <ProgressBar value={79} max={100} tone="violet" class="my-1" /> <span class="text-violet-700 dark:text-violet-300">৭৯% → ৮৫% · ✨ Transfer-verified</span>
+    </div>
+  </Card>
+
+  <!-- Other smart-moment kinds (one at a time in real use) -->
+  <p class="mb-2 text-xs font-medium text-slate-400">এই স্লটে আসতে পারে আরও:</p>
+  <div class="space-y-2">
+    <Card><p class="text-sm">🗣 <span class="font-semibold">Teach-back</span> — "এই concept তোমার বন্ধুকে কীভাবে বোঝাবে?"</p></Card>
+    <Card><p class="text-sm">👥 <span class="font-semibold">Study Buddy</span> — একজন বন্ধুকে বোঝাও, সে একটা সরল প্রশ্ন করবে।</p></Card>
+    <Card><p class="text-sm">🤔 <span class="font-semibold">Self-explain</span> — "কেন এটাই উত্তর?"</p></Card>
+    <Card><p class="text-sm">🎯 <span class="font-semibold">Calibration</span> — তোমার আত্মবিশ্বাস বনাম সঠিকতা মিলিয়ে দেখা।</p></Card>
+  </div>
+</Layout>

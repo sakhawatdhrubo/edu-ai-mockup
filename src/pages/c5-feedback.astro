@@ -1,0 +1,37 @@
+---
+/* C5 Session — answer feedback. Verdict + teach. Shown here on the wrong path:
+   confront-pattern reteach + an answerable similar question + smart-moment slot. */
+import Layout from '../layouts/Layout.astro';
+import SessionBar from '../components/SessionBar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+---
+<Layout title="ফিডব্যাক" id="C5" rails={false} active="learn">
+  <SessionBar phase="ধাপ ৪ · ফিডব্যাক" step={4} timer="০৫:০২" slot="header" />
+
+  <!-- Verdict header (wrong) -->
+  <Card tone="rose" class="mb-3">
+    <div class="flex items-center justify-between">
+      <span class="text-base font-bold text-rose-700 dark:text-rose-300">✗ ভুল</span>
+      <span class="text-xs text-slate-500">mastery <span class="font-semibold">64%</span> <Pill tone="indigo">অনুশীলনকারী</Pill></span>
+    </div>
+    <p class="mt-2 text-sm">তোমার উত্তর এসেছে <span class="font-mono">100 m/s²</span>। চলো একসাথে দেখি — কাছাকাছি ছিলে।</p>
+  </Card>
+
+  <!-- Confront-pattern reteach -->
+  <Card tone="amber" class="mb-3">
+    <p class="text-sm"><span class="font-semibold">অনেক ছাত্র মনে করে</span> ত্বরণ = বেগ ÷ সময় × সব মান, <span class="font-semibold">কিন্তু আসলে</span> ত্বরণ = বেগের <span class="underline">পরিবর্তন</span> ÷ সময়, <span class="font-semibold">কারণ</span> শুরুর বেগ ০ ধরে নিতে হবে: (২০−০)/৫ = ৪।</p>
+    <Button href="/c4-question" variant="secondary" size="sm" class="mt-3">একই type-এর আরেকটা প্রশ্ন</Button>
+  </Card>
+
+  <!-- Smart-moment slot -->
+  <Card tone="violet" class="mb-3">
+    <div class="flex items-center gap-2 text-sm font-semibold text-violet-800 dark:text-violet-200">💡 ছোট চ্যালেঞ্জ</div>
+    <p class="mt-1 text-sm">নিজের ভাষায় বলো — ত্বরণ কেন বেগের "পরিবর্তন" দিয়ে মাপা হয়?</p>
+    <Button href="/c7-smart-moments" variant="ghost" size="sm" class="mt-2">উত্তর দিই →</Button>
+  </Card>
+
+  <Button href="/c4-question" full>পরের প্রশ্ন →</Button>
+</Layout>

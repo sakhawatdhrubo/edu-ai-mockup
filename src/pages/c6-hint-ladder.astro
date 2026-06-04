@@ -1,0 +1,47 @@
+---
+/* C6 Session — hint ladder. Scaffolded help with a visible, fair cost. */
+import Layout from '../layouts/Layout.astro';
+import SessionBar from '../components/SessionBar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+
+const rungs = [
+  { n: 1, name: 'নাজ', cost: '×১.০', body: 'কোন দুটো বেগ লাগবে ভাবো — শুরুর আর শেষেরটা।', open: true },
+  { n: 2, name: 'হিন্ট', cost: '×০.৭', body: 'সূত্রটা মনে করো: a = (v − u) / t।', open: true },
+  { n: 3, name: 'ওয়ার্কড উদাহরণ', cost: '×০.৪', body: 'একই রকম: 0 → 30 m/s, 6 s → a = 5।', open: false },
+  { n: 4, name: 'পূর্ণ সমাধান', cost: '×০.১', body: 'সম্পূর্ণ ধাপে ধাপে উত্তর।', open: false },
+];
+---
+<Layout title="হিন্ট সিঁড়ি" id="C6" rails={false} active="learn">
+  <SessionBar phase="হিন্ট সিঁড়ি · স্তর ২/৪" step={4} timer="০৪:৫৫" slot="header" />
+
+  <Card tone="sky" class="mb-3">
+    <p class="text-sm">তোমার pace অনুযায়ী hint penalty কম রাখা হয়েছে।</p>
+  </Card>
+
+  <div class="space-y-2">
+    {rungs.map((r) => (
+      <Card class={r.open ? '' : 'opacity-60'}>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-semibold">স্তর {r.n}: {r.name}</span>
+          <Pill tone={r.cost === '×১.০' ? 'emerald' : r.cost === '×০.১' ? 'rose' : 'amber'}>{r.cost}</Pill>
+        </div>
+        {r.open
+          ? <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{r.body}</p>
+          : <p class="mt-2 text-sm text-slate-400">🔒 পরের হিন্টে খুলবে</p>}
+        {r.open && (
+          <div class="mt-2 flex gap-2 text-sm text-slate-400">
+            <button type="button" aria-label="সহায়ক">👍</button>
+            <button type="button" aria-label="সহায়ক নয়">👎</button>
+          </div>
+        )}
+      </Card>
+    ))}
+  </div>
+
+  <div class="mt-4 flex gap-2">
+    <Button href="/c6-hint-ladder" variant="secondary" full>পরের হিন্ট</Button>
+    <Button href="/c4-question" full>আবার চেষ্টা করি</Button>
+  </div>
+</Layout>

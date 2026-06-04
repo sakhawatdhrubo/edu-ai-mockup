@@ -1,0 +1,23 @@
+---
+/* C9 Session — wellbeing & companion banners. Light, dismissible nudges. Shows
+   the banner kinds (in real use: one at a time, once/session). */
+import Layout from '../layouts/Layout.astro';
+import SessionBar from '../components/SessionBar.astro';
+import Banner from '../components/Banner.astro';
+import Card from '../components/Card.astro';
+---
+<Layout title="ওয়েলবিইং" id="C9" rails={false} active="learn">
+  <SessionBar phase="ধাপ ৪ · প্রশ্ন ৭/১০" step={4} timer="১৮:৪০" slot="header" />
+
+  <p class="mb-2 text-xs font-medium text-slate-400">কম্প্যানিয়ন ব্যানার — pause-on-hover, dismissible (✕):</p>
+  <div class="space-y-2">
+    <Banner tone="error" icon="🔥" dismissible>৭ দিনের streak চলছে — আজ একটা session করলেই বাঁচবে। চালিয়ে যাও!</Banner>
+    <Banner tone="violet" icon="💜" dismissible>খুব ভালো করছ আজ। নিজেকে একটু বাহবা দাও — তুমি এগোচ্ছ।</Banner>
+    <Banner tone="warning" icon="☕" dismissible>অনেকক্ষণ পড়ছ — ২ মিনিটের ছোট break নিলে মনে থাকবে বেশি।</Banner>
+    <Banner tone="info" icon="🗓" dismissible>এই concept কাল আবার অল্প করে দেখলে long-term মনে থাকবে (distributed practice)।</Banner>
+  </div>
+
+  <Card tone="violet" class="mt-4">
+    <p class="text-sm">তুমি কিছু সময় ধরে কঠিন সময় পার করছ — এটা ঠিক আছে। ছোট break নাও। প্রয়োজন হলে কারো সাথে কথা বলো — পরিবার, বন্ধু, বা teacher। তুমি একা না।</p>
+  </Card>
+</Layout>

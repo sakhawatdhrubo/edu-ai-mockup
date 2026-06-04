@@ -1,0 +1,109 @@
+---
+/* B1 Dashboard — launchpad: one obvious next action + glanceable progress +
+   smart recommendations. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Banner from '../components/Banner.astro';
+import Pill from '../components/Pill.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+import Why from '../components/Why.astro';
+
+const mastery = [
+  { topic: 'Acceleration', pct: 78, tier: 'দক্ষ', tone: 'emerald', verified: true },
+  { topic: 'Velocity', pct: 64, tier: 'অনুশীলনকারী', tone: 'indigo', verified: false },
+  { topic: "Newton's 2nd law", pct: 31, tier: 'শিক্ষানবিস', tone: 'amber', verified: false },
+];
+const misconceptions = [
+  { name: 'mass ↔ weight', pct: 70, tone: 'rose', label: 'active' },
+  { name: 'velocity = acceleration', pct: 35, tone: 'amber', label: 'কমছে' },
+  { name: 'force needs motion', pct: 10, tone: 'emerald', label: 'repaired' },
+];
+const quick = [
+  { icon: '📝', label: 'মক', href: '/d1-mock-setup' },
+  { icon: '📜', label: 'ইতিহাস', href: '/e1-history' },
+  { icon: '📘', label: 'ফর্মুলা', href: '/d4-formula-sheet' },
+  { icon: '🗂', label: 'নোট', href: '/e5-notes-library' },
+  { icon: '🔎', label: 'খুঁজি', href: '/e7-concept-search' },
+];
+---
+<Layout title="ড্যাশবোর্ড" id="B1" active="home">
+  <!-- Greeting -->
+  <div class="mb-3">
+    <h1 class="text-lg font-bold">শুভ সন্ধ্যা, রিফাত 🌙</h1>
+    <p class="text-sm text-slate-500 dark:text-slate-400">কাল ভালো করেছিলে — আজ আরো একটু এগিয়ে যাই?</p>
+  </div>
+
+  <!-- Daily goal + exam countdown -->
+  <div class="mb-4 grid grid-cols-2 gap-2">
+    <Card tone="indigo" pad={false} class="p-3">
+      <div class="flex items-center justify-between text-xs font-medium text-indigo-700 dark:text-indigo-300"><span>🎯 আজকের লক্ষ্য</span><span>০/১</span></div>
+      <ProgressBar value={0} max={1} tone="indigo" class="mt-2" />
+    </Card>
+    <Card tone="emerald" pad={false} class="p-3">
+      <div class="text-xs font-medium text-emerald-700 dark:text-emerald-300">পরীক্ষা পর্যন্ত</div>
+      <div class="mt-0.5 text-sm font-bold">৪২ দিন <Pill tone="emerald">on-track</Pill></div>
+    </Card>
+  </div>
+
+  <!-- HERO -->
+  <a href="/c2-greeting" class="mb-4 block rounded-xl bg-gradient-to-br from-indigo-600 to-indigo-700 p-5 text-white shadow-lg active:scale-[.99]">
+    <div class="text-xs font-medium text-indigo-200">আজ তোমার সবচেয়ে দরকারি কাজ</div>
+    <div class="mt-1 flex items-center gap-2 text-xl font-bold">▶ আজকের পড়া শুরু করো</div>
+    <div class="mt-1 text-sm text-indigo-100">Acceleration · ১৫ মিনিট</div>
+  </a>
+  <p class="-mt-2 mb-4 text-center text-xs">
+    <a href="/c1-chooser" class="text-indigo-600 underline dark:text-indigo-400">অন্য concept বেছে নাও</a>
+  </p>
+
+  <!-- Recommendation banners (dismissible, stacked) -->
+  <div class="mb-4 space-y-2">
+    <a href="/c1-chooser" class="block"><Banner tone="warning" icon="🔁" dismissible>আজকের পুনঃ-পরীক্ষা: ৩টি আউটকাম — <span class="font-semibold underline">শুরু করো →</span></Banner></a>
+    <a href="/d1-mock-setup" class="block"><Banner tone="success" icon="📝" dismissible>মক রেডি! এই সপ্তাহের অগ্রগতি যাচাই করো — <span class="font-semibold underline">দাও →</span></Banner></a>
+  </div>
+
+  <!-- Mastery card -->
+  <Card class="mb-4">
+    <div class="mb-2 flex items-center justify-between">
+      <h2 class="text-sm font-bold">🎯 আমার অগ্রগতি</h2>
+      <Why>tier badge-এ রং; raw % শুধু তথ্য। 'মাস্টার' হতে transfer task দরকার।</Why>
+    </div>
+    <div class="space-y-3">
+      {mastery.map((m) => (
+        <a href="/c1-chooser" class="block">
+          <div class="mb-1 flex items-center justify-between text-sm">
+            <span>{m.topic} {m.verified && <span title="transfer-verified" class="text-emerald-500">✓</span>}</span>
+            <Pill tone={m.tone}>{m.tier}</Pill>
+          </div>
+          <ProgressBar value={m.pct} max={100} tone="slate" />
+        </a>
+      ))}
+    </div>
+  </Card>
+
+  <!-- Misconception heatmap -->
+  <Card class="mb-4">
+    <div class="mb-2 flex items-center justify-between">
+      <h2 class="text-sm font-bold">🧠 ভুল-বোঝা <span class="text-xs font-normal text-slate-400">(timeline)</span></h2>
+    </div>
+    <div class="space-y-2.5">
+      {misconceptions.map((m) => (
+        <a href="/e3-mistakes" class="block">
+          <div class="mb-1 flex items-center justify-between text-xs">
+            <span>{m.name}</span>
+            <span class="text-slate-400">{m.label}</span>
+          </div>
+          <ProgressBar value={m.pct} max={100} tone={m.tone} />
+        </a>
+      ))}
+    </div>
+  </Card>
+
+  <!-- Quick launch -->
+  <div class="grid grid-cols-5 gap-1.5">
+    {quick.map((q) => (
+      <a href={q.href} class="flex flex-col items-center gap-1 rounded-md border border-slate-200 bg-white py-2.5 text-[11px] dark:border-slate-800 dark:bg-slate-900">
+        <span class="text-lg">{q.icon}</span><span>{q.label}</span>
+      </a>
+    ))}
+  </div>
+</Layout>

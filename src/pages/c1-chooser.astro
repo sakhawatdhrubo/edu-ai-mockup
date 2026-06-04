@@ -1,0 +1,68 @@
+---
+/* C1 Session chooser — three honest options. Don't silently reroute around
+   missing prerequisites; offer a choice. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+import Banner from '../components/Banner.astro';
+
+const options = [
+  { t: 'সরাসরি শুরু', d: 'Acceleration এখনই শুরু করো', tone: 'indigo', primary: true },
+  { t: 'দ্রুত prereq কভার', d: 'Velocity ঝালিয়ে নিয়ে তারপর', tone: 'sky', primary: false },
+  { t: 'পুরো prereq chapter আগে', d: 'Motion পুরোটা আগে শেষ করি', tone: 'slate', primary: false },
+];
+const topics = [
+  { ch: 'Motion', items: [{ n: 'Velocity', m: 64, rec: false }, { n: 'Acceleration', m: 78, rec: true }] },
+  { ch: 'Force', items: [{ n: "Newton's laws", m: 31, rec: false }] },
+];
+---
+<Layout title="সেশন বাছাই" id="C1" active="learn">
+  <h1 class="mb-3 text-lg font-bold">আজ কী পড়বে?</h1>
+
+  <!-- Resume -->
+  <Banner tone="info" icon="⏸" class="mb-3">আগের session আছে (Acceleration · ৮ মিনিট বাকি)। <a href="/c2-greeting" class="font-semibold underline">চালিয়ে যাও</a> · <a href="/c2-greeting" class="underline">নতুন</a></Banner>
+
+  <!-- Planner pick -->
+  <Card tone="violet" class="mb-4">
+    <div class="flex items-center gap-2"><span>✨</span><span class="text-sm font-semibold text-violet-800 dark:text-violet-200">সুপারিশ: Acceleration</span></div>
+    <p class="mt-0.5 text-xs text-violet-700/80 dark:text-violet-300/80">তোমার level-এ এটাই এখন সবচেয়ে দরকারি।</p>
+  </Card>
+
+  <!-- Three options -->
+  <div class="mb-4 space-y-2">
+    {options.map((o) => (
+      <a href="/c2-greeting" class:list={['flex items-center gap-3 rounded-md border px-4 py-3 min-h-touch', o.primary ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10' : 'border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900']}>
+        <div class="flex-1">
+          <div class="text-sm font-semibold">{o.t}</div>
+          <div class="text-xs text-slate-500 dark:text-slate-400">{o.d}</div>
+        </div>
+        <span class="text-slate-300">›</span>
+      </a>
+    ))}
+  </div>
+
+  <!-- Mode toggles -->
+  <div class="mb-4 flex flex-wrap gap-2 text-xs">
+    <label class="flex items-center gap-1.5 rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-700"><input type="checkbox" class="accent-indigo-600" /> interleaved</label>
+    <label class="flex items-center gap-1.5 rounded-full border border-slate-200 px-2.5 py-1 dark:border-slate-700"><input type="checkbox" class="accent-indigo-600" checked /> retrieval-first</label>
+  </div>
+
+  <!-- Topic browser -->
+  <h2 class="mb-2 text-sm font-bold">সব বিষয়</h2>
+  <div class="space-y-2">
+    {topics.map((t) => (
+      <details class="rounded-md border border-slate-200 dark:border-slate-700" open={t.ch === 'Motion'}>
+        <summary class="cursor-pointer list-none px-4 py-2.5 text-sm font-medium">{t.ch}</summary>
+        <div class="border-t border-slate-100 px-4 py-2 dark:border-slate-800">
+          {t.items.map((it) => (
+            <a href="/c2-greeting" class="flex items-center justify-between py-1.5 text-sm">
+              <span>{it.n} {it.rec && <Pill tone="violet">✨</Pill>}</span>
+              <span class="text-xs text-slate-400">mastery {it.m}%</span>
+            </a>
+          ))}
+        </div>
+      </details>
+    ))}
+  </div>
+</Layout>

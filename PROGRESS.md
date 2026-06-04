@@ -48,22 +48,22 @@ Zone A — Getting in ✅
 - [x] A7 Placement result
 - [x] A8 Profile switcher
 
-Zone B — Home
-- [ ] B1 Dashboard
+Zone B — Home ✅
+- [x] B1 Dashboard
 
-Zone C — Core loop
-- [ ] C1 Session chooser
-- [ ] C2 Greeting + engage
-- [ ] C3 Explanation (5 modalities)
-- [ ] C4 Question card
-- [ ] C5 Answer feedback
-- [ ] C6 Hint ladder
-- [ ] C7 Smart moments (teach-back / study-buddy / transfer / self-explain / calibration)
-- [ ] C8 Notes panel
-- [ ] C9 Wellbeing banners
-- [ ] C10 Session controls
-- [ ] C11 End + reflection
-- [ ] C12 Session summary
+Zone C — Core loop ✅ (added SessionBar.astro shell)
+- [x] C1 Session chooser
+- [x] C2 Greeting + engage
+- [x] C3 Explanation (5 modalities)
+- [x] C4 Question card
+- [x] C5 Answer feedback
+- [x] C6 Hint ladder
+- [x] C7 Smart moments (teach-back / study-buddy / transfer / self-explain / calibration)
+- [x] C8 Notes panel
+- [x] C9 Wellbeing banners
+- [x] C10 Session controls
+- [x] C11 End + reflection
+- [x] C12 Session summary
 
 Zone D — Assess
 - [ ] D1 Mock setup
@@ -117,11 +117,12 @@ Zone I — Billing
 - [ ] dark-mode pass · [ ] mobile (~390px) pass on every page · [ ] index complete + all links work · [ ] `npm run build` clean
 
 ## Current next step
-> **Phase 1 — Zone B (B1 Dashboard), then Zone C.** Zone A done + builds clean (10 pages).
+> **Phase 1 — Zone D (D1–D4 Assess), then E, F, G, H, I.** Zones A/B/C done + builds clean (23 pages). SessionBar lives via Layout's `header` named slot (`<SessionBar ... slot="header" />`).
 
 ## Gotchas (read before writing screens)
 - **Inline math/braces**: never write `\(F_{net}=0\)` directly in `.astro` markup — Astro parses `{net}` as an expression and the build errors. Use the `<Math tex="F_{net}=0" />` component (string prop → braces safe). `display` prop for block math.
 
 ## Log (append one line per session/batch — newest at top)
+- 2026-06-05 — Zone B (B1) + Zone C (C1–C12) done + added `SessionBar.astro` (session shell via Layout `header` slot). Build clean, 23 pages.
 - 2026-06-05 — Zone A done (A1–A8, 9 screens) + added `Math.astro` (KaTeX-safe braces). Build clean, 10 pages.
 - 2026-06-05 — Phase 0 scaffold complete: Astro 6 + Tailwind v4 (PostCSS) + KaTeX + Bangla font; Layout + 13 shared components + index directory (58 screens) + screens.js registry; `npm run build` clean. (See "Stack notes" — Tailwind is PostCSS, not the vite plugin.)

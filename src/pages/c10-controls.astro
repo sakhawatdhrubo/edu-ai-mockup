@@ -1,0 +1,39 @@
+---
+/* C10 Session — controls. Stay in control of the session. Shown with the
+   pause/quit-confirm modal state. */
+import Layout from '../layouts/Layout.astro';
+import SessionBar from '../components/SessionBar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Banner from '../components/Banner.astro';
+---
+<Layout title="সেশন কন্ট্রোল" id="C10" rails={false} active="learn">
+  <SessionBar phase="ধাপ ৪ · প্রশ্ন ৭/১০" step={4} timer="২৪:০৫" slot="header" />
+
+  <div class="space-y-3">
+    <Card>
+      <div class="flex items-center justify-between">
+        <span class="text-sm font-semibold">সেশন</span>
+        <span class="flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400">● auto-save চালু</span>
+      </div>
+      <div class="mt-3 grid grid-cols-2 gap-2">
+        <Button href="/c4-question" variant="secondary">▶ চালিয়ে যাও</Button>
+        <Button href="/c10-controls" variant="secondary">◼ বিরতি</Button>
+      </div>
+    </Card>
+
+    <Banner tone="warning" icon="⏱">সময়সীমার কাছাকাছি — আর ~৫ মিনিট। চাইলে এখন শেষ করতে পারো।</Banner>
+
+    <!-- graceful end -->
+    <Card>
+      <p class="text-sm font-semibold">আজকের মতো শেষ করবে?</p>
+      <p class="mt-0.5 text-xs text-slate-500 dark:text-slate-400">তোমার অগ্রগতি সংরক্ষিত থাকবে — যেখানে থামবে সেখান থেকেই শুরু হবে।</p>
+      <Button href="/c11-reflection" full class="mt-3">আজকের মতো শেষ করি</Button>
+    </Card>
+  </div>
+
+  <!-- quit-confirm modal note -->
+  <div class="mt-4 rounded-md border border-dashed border-slate-300 p-3 text-center text-xs text-slate-400 dark:border-slate-600">
+    states: active · paused · quit-confirm modal ("নিশ্চিত? অগ্রগতি সংরক্ষিত থাকবে।")
+  </div>
+</Layout>

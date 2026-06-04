@@ -1,0 +1,28 @@
+---
+/* C11 Session — end + reflection. Close the loop with a reflection that carries
+   forward to tomorrow's greeting. */
+import Layout from '../layouts/Layout.astro';
+import SessionBar from '../components/SessionBar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+---
+<Layout title="সমাপ্তি · প্রতিফলন" id="C11" rails={false} active="learn">
+  <SessionBar phase="ধাপ ৮ · সমাপ্তি" step={7} timer="২৬:১০" slot="header" />
+
+  <h1 class="mb-1 text-lg font-bold">দারুণ সেশন! 🎉</h1>
+  <p class="mb-4 text-sm text-slate-500 dark:text-slate-400">শেষ করার আগে একটু ভাবো।</p>
+
+  <Card class="mb-3">
+    <label class="text-sm font-semibold">আজ কী শিখলাম?</label>
+    <p class="mt-0.5 text-xs text-slate-400">এক লাইনে লেখো — কাল শুরুতে তোমাকে মনে করিয়ে দেব।</p>
+    <textarea rows="2" placeholder="যেমন: ত্বরণ মানে বেগের পরিবর্তন…" class="mt-2 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"></textarea>
+  </Card>
+
+  <Card tone="sky" class="mb-4">
+    <div class="flex items-center gap-2 text-xs font-medium text-sky-700 dark:text-sky-300"><span>✍️</span> সারাংশ প্রস্তুত <Pill tone="sky">Scribe</Pill></div>
+    <p class="mt-1 text-sm">Acceleration · ৮টি প্রশ্ন · ৬টি সঠিক · ১টি ভুল-বোঝা ঠিক হলো।</p>
+  </Card>
+
+  <Button href="/c12-summary" full>সারাংশ দেখো →</Button>
+</Layout>

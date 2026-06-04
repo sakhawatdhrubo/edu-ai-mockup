@@ -1,0 +1,50 @@
+---
+/* C12 Session summary — recap + a real next step (deep-linked, not a dead end). */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+
+const stats = [
+  { k: 'প্রশ্ন', v: '৮' },
+  { k: 'সঠিক', v: '৬' },
+  { k: 'সময়', v: '২৬ মি' },
+  { k: 'mastery', v: '+৬%' },
+];
+---
+<Layout title="সেশন সারাংশ" id="C12" active="learn">
+  <div class="mb-4 text-center">
+    <span class="text-3xl">📋</span>
+    <h1 class="mt-1 text-lg font-bold">Acceleration আজ অনেকটা এগোলো</h1>
+    <a href="/b1-dashboard" class="text-xs text-indigo-600 underline dark:text-indigo-400">ড্যাশবোর্ডে যাও</a>
+  </div>
+
+  <!-- numbers -->
+  <div class="mb-4 grid grid-cols-4 gap-2 text-center">
+    {stats.map((s) => (
+      <Card pad={false} class="py-2.5">
+        <div class="text-base font-bold">{s.v}</div>
+        <div class="text-[10px] text-slate-400">{s.k}</div>
+      </Card>
+    ))}
+  </div>
+
+  <!-- recap -->
+  <Card class="mb-4">
+    <h2 class="text-sm font-bold">আজকের সারসংক্ষেপ</h2>
+    <ul class="mt-2 space-y-1.5 text-sm">
+      <li>✅ <span class="font-medium">শক্তি:</span> সূত্র প্রয়োগ ভালো হচ্ছে।</li>
+      <li>🛠 <span class="font-medium">ঠিক হলো:</span> "ত্বরণ = বেগ ÷ সময়" ভুল-বোঝা।</li>
+      <li>🎯 <span class="font-medium">পরের ফোকাস:</span> ঋণাত্মক ত্বরণ (deceleration)।</li>
+    </ul>
+    <div class="mt-2"><Pill tone="emerald">✨ Level-up: অনুশীলনকারী → দক্ষ</Pill></div>
+  </Card>
+
+  <!-- real next step -->
+  <p class="mb-2 text-sm font-bold">পরের পদক্ষেপ</p>
+  <div class="space-y-2">
+    <Button href="/c2-greeting" full>▶ Deceleration শুরু করো</Button>
+    <Button href="/d1-mock-setup" variant="secondary" full>📝 ছোট মক দিয়ে যাচাই করো</Button>
+    <a href="/c1-chooser" class="block text-center text-xs text-slate-400">🎯 কাল Velocity-তে ফিরব?</a>
+  </div>
+</Layout>

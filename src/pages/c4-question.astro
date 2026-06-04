@@ -1,0 +1,42 @@
+---
+/* C4 Session — question card. One question, the right input, confidence. */
+import Layout from '../layouts/Layout.astro';
+import SessionBar from '../components/SessionBar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Why from '../components/Why.astro';
+import Math from '../components/Math.astro';
+---
+<Layout title="প্রশ্ন" id="C4" rails={false} active="learn">
+  <SessionBar phase="ধাপ ৪ · প্রশ্ন ৩/১০" step={4} timer="০৪:১০" slot="header" />
+
+  <Card class="mb-3">
+    <div class="mb-2 flex items-center justify-between">
+      <span class="text-xs font-medium text-slate-400">প্রশ্ন · মাঝারি</span>
+      <Why label="কেন এই প্রশ্ন?">তোমার level-এ সবচেয়ে informative প্রশ্ন।</Why>
+    </div>
+    <p class="text-sm leading-relaxed">
+      একটি গাড়ি স্থির অবস্থা থেকে ৫ সেকেন্ডে <Math tex="20\ \text{m/s}" /> বেগ অর্জন করে। এর ত্বরণ কত?
+    </p>
+
+    <!-- numerical input -->
+    <div class="mt-4">
+      <label class="mb-1 block text-xs font-medium text-slate-500">তোমার উত্তর</label>
+      <div class="flex items-center gap-2">
+        <input type="text" placeholder="উদাহরণ: 12.5" class="flex-1 rounded-md border border-slate-300 bg-white px-3 py-2.5 text-sm dark:border-slate-700 dark:bg-slate-800" />
+        <span class="text-sm text-slate-500">m/s²</span>
+        <button type="button" aria-label="ভয়েস ইনপুট" class="grid h-11 w-11 place-items-center rounded-md border border-slate-200 dark:border-slate-700">🎤</button>
+      </div>
+    </div>
+
+    <!-- confidence dial -->
+    <div class="mt-4">
+      <label class="mb-1 flex items-center justify-between text-xs font-medium text-slate-500"><span>কতটা নিশ্চিত?</span><span>৩/৫</span></label>
+      <input type="range" min="1" max="5" value="3" class="w-full accent-indigo-600" />
+      <div class="flex justify-between text-[10px] text-slate-400"><span>আন্দাজ</span><span>খুব নিশ্চিত</span></div>
+    </div>
+  </Card>
+
+  <Button href="/c5-feedback" full>জমা দাও</Button>
+  <p class="mt-2 text-center text-[11px] text-slate-400">হিন্ট ~২০ সেকেন্ড পর খুলবে · <a href="/c6-hint-ladder" class="underline">হিন্ট সিঁড়ি</a></p>
+</Layout>

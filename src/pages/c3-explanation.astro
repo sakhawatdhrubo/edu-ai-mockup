@@ -1,0 +1,71 @@
+---
+/* C3 Session — explanation panel (5 modalities). Teach the concept; student
+   controls how. Shown here in worked-example modality. */
+import Layout from '../layouts/Layout.astro';
+import SessionBar from '../components/SessionBar.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Banner from '../components/Banner.astro';
+import Math from '../components/Math.astro';
+
+const modalities = [
+  { icon: '📝', label: 'টেক্সট', sel: false },
+  { icon: '🎬', label: 'ভিডিও', sel: false },
+  { icon: '✨', label: 'অ্যানিমেশন', sel: false },
+  { icon: '🧩', label: 'উদাহরণ', sel: true },
+  { icon: '💬', label: 'প্রশ্নোত্তর', sel: false },
+];
+const steps = [
+  { v: 'লেখো যা জানা', why: 'শুরুতেই চলক গুছিয়ে নিলে ভুল কম হয়', body: 'u = 0, v = 20 m/s, t = 5 s' },
+  { v: 'সূত্র বাছো', why: 'বেগ পরিবর্তন ও সময় জানা → সংজ্ঞা সূত্র', body: 'a = (v − u) / t' },
+  { v: 'বসাও ও হিসাব করো', why: 'এক ধাপে এক কাজ', body: 'a = (20 − 0) / 5 = 4 m/s²' },
+];
+---
+<Layout title="ব্যাখ্যা" id="C3" rails={false} active="learn">
+  <SessionBar phase="ধাপ ৩ · ব্যাখ্যা" step={3} timer="০২:৪৮" slot="header" />
+
+  <!-- Modality switcher -->
+  <div class="mb-3">
+    <p class="mb-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">অন্যভাবে বুঝতে চাও?</p>
+    <div class="flex gap-1.5 overflow-x-auto pb-1">
+      {modalities.map((m) => (
+        <button type="button" class:list={['flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-xs min-h-touch', m.sel ? 'border-indigo-500 bg-indigo-50 font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300' : 'border-slate-200 dark:border-slate-700']}>
+          <span>{m.icon}</span>{m.label}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Fallback note -->
+  <Banner tone="warning" icon="ⓘ" class="mb-3">ভিডিও এই concept-এর জন্য এখনো নেই — উদাহরণ দিয়ে দেখাচ্ছি।</Banner>
+
+  <!-- Worked-example content -->
+  <Card class="mb-3">
+    <div class="mb-2 flex items-center justify-between">
+      <h2 class="text-sm font-bold">ত্বরণ (acceleration) কী?</h2>
+      <button type="button" aria-label="পড়ে শোনাও" class="text-slate-400">🔊</button>
+    </div>
+    <p class="text-sm">ত্বরণ = একক সময়ে বেগের পরিবর্তন। সূত্র: <Math tex="a = \dfrac{v - u}{t}" /></p>
+
+    <div class="mt-3 space-y-2">
+      {steps.map((s, i) => (
+        <details class="rounded-md border border-slate-200 dark:border-slate-700" open={i === 0}>
+          <summary class="cursor-pointer list-none px-3 py-2 text-sm font-medium">ধাপ {i + 1}: {s.v}</summary>
+          <div class="border-t border-slate-100 px-3 py-2 dark:border-slate-800">
+            <p class="font-mono text-sm">{s.body}</p>
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">কেন: {s.why}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </Card>
+
+  <!-- CTAs -->
+  <div class="flex flex-col gap-2">
+    <Button href="/c4-question" full>চলো অনুশীলন করি</Button>
+    <div class="flex items-center justify-between text-xs">
+      <a href="/c3-explanation" class="text-indigo-600 underline dark:text-indigo-400">আরো একটা ব্যাখ্যা পাও (≤৩×)</a>
+      <a href="/h1-report" class="text-slate-400">⚠ Report</a>
+    </div>
+  </div>
+</Layout>

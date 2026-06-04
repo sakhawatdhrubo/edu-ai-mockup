@@ -46,6 +46,7 @@ const { title, id = '', rails = true, nav = true, active = '', pad = true } = As
     <!-- desktop: subtle device frame; phone: full-bleed column -->
     <div class="relative mx-auto flex min-h-screen w-full max-w-[420px] flex-col bg-white shadow-xl ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
       {rails && <TopRails active={active} />}
+      <slot name="header" />
       <main class:list={["flex-1", pad && "px-4 py-4", nav && "pb-24"]}>
         <slot />
       </main>
