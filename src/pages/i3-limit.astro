@@ -1,0 +1,21 @@
+---
+/* I3 Limit prompt — soft free-tier limit (overlay). Not a dark pattern. */
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="সীমা" id="I3" rails={false} nav={false} pad={false}>
+  <div class="p-4 text-sm text-slate-400">ফ্রি session শেষ হলে এই নরম overlay…</div>
+
+  <div class="absolute inset-0 z-50 flex items-end bg-slate-900/50">
+    <a href="/b1-dashboard" class="absolute inset-0" aria-label="বন্ধ"></a>
+    <div class="relative w-full rounded-t-2xl bg-white p-6 text-center dark:bg-slate-900">
+      <div class="text-4xl">🌙</div>
+      <h1 class="mt-2 text-lg font-bold">আজকের ফ্রি session শেষ</h1>
+      <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">দারুণ পড়েছ আজ! Pro-তে unlimited session পাবে।</p>
+      <div class="mt-5 flex flex-col gap-2">
+        <Button href="/i1-plans" full>Pro দেখো</Button>
+        <a href="/b1-dashboard" class="text-sm font-medium text-slate-500 dark:text-slate-400">কাল আবার আসব</a>
+      </div>
+    </div>
+  </div>
+</Layout>

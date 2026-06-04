@@ -1,0 +1,28 @@
+---
+/* H12 Legal — public. Policy docs (privacy / terms) + language toggle. */
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="আইনি" id="H12" rails={false} nav={false}>
+  <div class="mb-3 flex items-center justify-between">
+    <h1 class="text-lg font-bold">প্রাইভেসি ও শর্তাবলি</h1>
+    <div class="flex gap-1 rounded-full bg-slate-100 p-0.5 text-xs dark:bg-slate-800">
+      <button class="rounded-full bg-white px-2.5 py-1 font-medium shadow-sm dark:bg-slate-700">বাংলা</button>
+      <button class="rounded-full px-2.5 py-1 text-slate-500">English</button>
+    </div>
+  </div>
+
+  <div class="flex gap-2 border-b border-slate-200 text-sm dark:border-slate-700">
+    <button class="border-b-2 border-indigo-600 px-1 py-2 font-medium text-indigo-600 dark:text-indigo-400">প্রাইভেসি</button>
+    <button class="px-1 py-2 text-slate-500">শর্তাবলি</button>
+  </div>
+
+  <article class="mt-3 space-y-3 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+    <h2 class="font-bold text-slate-900 dark:text-slate-100">তথ্য সংগ্রহ</h2>
+    <p>আমরা শুধু তোমার শেখার অভিজ্ঞতা উন্নত করতে প্রয়োজনীয় তথ্য সংগ্রহ করি — তোমার উত্তর, অগ্রগতি, ও পছন্দ।</p>
+    <h2 class="font-bold text-slate-900 dark:text-slate-100">তথ্য ব্যবহার</h2>
+    <p>তোমার data কখনো তৃতীয় পক্ষের কাছে বিক্রি করা হয় না। অভিভাবক ও শিক্ষক শুধু সারাংশ দেখেন — নির্দিষ্ট উত্তর নয়।</p>
+    <h2 class="font-bold text-slate-900 dark:text-slate-100">তোমার অধিকার</h2>
+    <p>যেকোনো সময় তোমার data ডাউনলোড বা মুছে ফেলতে পারো (সেটিংস → data)।</p>
+    <p class="text-xs text-slate-400">সর্বশেষ হালনাগাদ: জুন ২০২৬</p>
+  </article>
+</Layout>

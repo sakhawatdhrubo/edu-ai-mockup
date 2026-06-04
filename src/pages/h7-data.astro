@@ -1,0 +1,27 @@
+---
+/* H7 Data export & delete — user data rights. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="data ও অ্যাকাউন্ট" id="H7" active="home">
+  <a href="/h4-settings" class="text-sm text-slate-500 dark:text-slate-400">← সেটিংস</a>
+  <h1 class="mt-1 mb-4 text-lg font-bold">তোমার data</h1>
+
+  <!-- export -->
+  <Card class="mb-4">
+    <h2 class="text-sm font-semibold">📦 data ডাউনলোড</h2>
+    <p class="mt-0.5 text-xs text-slate-500 dark:text-slate-400">তোমার সব শেখার তথ্য JSON ও CSV ফরম্যাটে।</p>
+    <Button href="/h7-data" variant="secondary" size="sm" class="mt-2">তৈরি করো</Button>
+    <p class="mt-2 text-[11px] text-slate-400">states: প্রস্তুত হচ্ছে… · রেডি (ডাউনলোড) · মেয়াদ শেষ</p>
+  </Card>
+
+  <!-- danger zone -->
+  <Card tone="rose">
+    <h2 class="text-sm font-semibold text-rose-700 dark:text-rose-300">⚠ অ্যাকাউন্ট মুছে ফেলা</h2>
+    <p class="mt-1 text-xs text-rose-700/80 dark:text-rose-300/80">৩০ দিনের grace period — এর মধ্যে ফেরানো যাবে। তারপর স্থায়ীভাবে মুছে যাবে।</p>
+    <label class="mt-3 block text-xs font-medium">নিশ্চিত করতে "DELETE" লেখো</label>
+    <input type="text" placeholder="DELETE" class="mt-1 w-full rounded-md border border-rose-300 bg-white px-3 py-2 text-sm dark:border-rose-500/40 dark:bg-slate-900" />
+    <Button href="/h7-data" variant="danger" full class="mt-3">অ্যাকাউন্ট মুছে ফেলো</Button>
+  </Card>
+</Layout>

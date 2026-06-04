@@ -1,0 +1,53 @@
+---
+/* H4 Settings (full) — all preferences in one place. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+
+const groups = [
+  { label: 'অ্যাকাউন্ট', items: [
+    { icon: '👤', t: 'প্রোফাইল সম্পাদনা', href: '/h5-profile-edit' },
+    { icon: '🔄', t: 'প্রোফাইল বদলাও', href: '/a8-profile-switcher' },
+  ]},
+  { label: 'পছন্দ', items: [
+    { icon: '🌐', t: 'ভাষা', meta: 'বাংলা', href: '/h5-profile-edit' },
+    { icon: '🔊', t: 'পড়ে শোনানো (read-aloud)', meta: 'চালু', toggle: true },
+    { icon: '🌙', t: 'ডার্ক মোড', toggle: true, dark: true },
+    { icon: '🔠', t: 'ফন্ট সাইজ ও high-contrast', href: '/h5-profile-edit' },
+    { icon: '🔔', t: 'নোটিফিকেশন', href: '/h6-notifications-prefs' },
+  ]},
+  { label: 'নিরাপত্তা ও data', items: [
+    { icon: '🔐', t: 'সক্রিয় device · সব device-এ logout', href: '/h7-data' },
+    { icon: '📦', t: 'data export ও মুছে ফেলা', href: '/h7-data' },
+    { icon: '💳', t: 'সাবস্ক্রিপশন', href: '/i1-plans' },
+  ]},
+];
+---
+<Layout title="সেটিংস" id="H4" active="home">
+  <h1 class="mb-4 text-lg font-bold">⚙️ সেটিংস</h1>
+
+  {groups.map((g) => (
+    <section class="mb-4">
+      <h2 class="mb-1.5 text-xs font-semibold uppercase text-slate-400">{g.label}</h2>
+      <Card pad={false} class="divide-y divide-slate-100 dark:divide-slate-800">
+        {g.items.map((it) => (
+          it.toggle ? (
+            <div class="flex items-center gap-3 px-4 py-3">
+              <span>{it.icon}</span><span class="flex-1 text-sm">{it.t}</span>
+              {it.dark
+                ? <button type="button" onclick="toggleDark()" class="h-6 w-11 rounded-full bg-slate-300 p-0.5 dark:bg-indigo-600"><span class="block h-5 w-5 rounded-full bg-white transition dark:translate-x-5"></span></button>
+                : <span class="h-6 w-11 rounded-full bg-indigo-600 p-0.5"><span class="block h-5 w-5 translate-x-5 rounded-full bg-white"></span></span>}
+            </div>
+          ) : (
+            <a href={it.href} class="flex items-center gap-3 px-4 py-3">
+              <span>{it.icon}</span><span class="flex-1 text-sm">{it.t}</span>
+              {it.meta && <span class="text-xs text-slate-400">{it.meta}</span>}
+              <span class="text-slate-300">›</span>
+            </a>
+          )
+        ))}
+      </Card>
+    </section>
+  ))}
+
+  <a href="/a2-login" class="block py-3 text-center text-sm font-medium text-rose-600">লগআউট</a>
+</Layout>

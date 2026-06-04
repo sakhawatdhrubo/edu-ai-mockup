@@ -1,0 +1,31 @@
+---
+/* H5 Profile edit — name, grade, language, modality, tone, pace, exam date. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+---
+<Layout title="প্রোফাইল সম্পাদনা" id="H5" active="home">
+  <a href="/h4-settings" class="text-sm text-slate-500 dark:text-slate-400">← সেটিংস</a>
+  <h1 class="mt-1 mb-4 text-lg font-bold">প্রোফাইল সম্পাদনা</h1>
+
+  <Card class="space-y-3">
+    <label class="block"><span class="mb-1 block text-sm font-medium">নাম</span><input type="text" value="রিফাত" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800" /></label>
+    <div class="grid grid-cols-2 gap-3">
+      <label class="block"><span class="mb-1 block text-sm font-medium">শ্রেণি</span>
+        <select class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"><option>SSC (১০ম)</option><option>৯ম</option></select></label>
+      <label class="block"><span class="mb-1 block text-sm font-medium">ভাষা</span>
+        <select class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"><option>বাংলা</option><option>Mixed</option><option>English</option></select></label>
+    </div>
+    <label class="block"><span class="mb-1 block text-sm font-medium">পছন্দের modality</span>
+      <select class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"><option>উদাহরণ</option><option>ভিডিও</option><option>টেক্সট</option><option>অ্যানিমেশন</option><option>প্রশ্নোত্তর</option></select></label>
+    <div class="grid grid-cols-2 gap-3">
+      <label class="block"><span class="mb-1 block text-sm font-medium">টিউটরের সুর</span>
+        <select class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"><option>বন্ধুত্বপূর্ণ</option><option>সংক্ষিপ্ত</option></select></label>
+      <label class="block"><span class="mb-1 block text-sm font-medium">গতি (pace)</span>
+        <select class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800"><option>স্বাভাবিক</option><option>ধীর</option><option>দ্রুত</option></select></label>
+    </div>
+    <label class="block"><span class="mb-1 block text-sm font-medium">পরীক্ষার তারিখ</span><input type="text" value="২০ জুলাই ২০২৬" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800" /></label>
+  </Card>
+
+  <Button href="/h4-settings" full class="mt-4">সংরক্ষণ করো</Button>
+</Layout>

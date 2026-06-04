@@ -1,0 +1,32 @@
+---
+/* I1 Plans — choose a tier. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Pill from '../components/Pill.astro';
+
+const plans = [
+  { t: 'ফ্রি', price: '৳০', feats: ['দিনে ১ session', 'mastery tracking', 'সীমিত মক'], cta: 'বর্তমান', tone: 'slate', current: true },
+  { t: 'Pro', price: '৳২৯৯/মাস', feats: ['unlimited session', 'সব মক + ফর্মুলা', 'অভিভাবক digest', '৭ দিন ফ্রি ট্রায়াল'], cta: 'Pro নাও', tone: 'indigo', current: false },
+  { t: 'School', price: 'যোগাযোগ', feats: ['পুরো ক্লাস', 'শিক্ষক কনসোল', 'রিপোর্ট'], cta: 'কথা বলো', tone: 'violet', current: false },
+];
+---
+<Layout title="প্ল্যান" id="I1" active="home">
+  <h1 class="mb-1 text-lg font-bold">তোমার প্ল্যান বাছো</h1>
+  <p class="mb-4 text-sm text-slate-500 dark:text-slate-400">যেকোনো সময় বদলানো বা বাতিল করা যাবে।</p>
+
+  <div class="space-y-3">
+    {plans.map((p) => (
+      <Card tone={p.tone}>
+        <div class="flex items-center justify-between">
+          <span class="text-base font-bold">{p.t}</span>
+          <span class="text-sm font-semibold">{p.price}</span>
+        </div>
+        <ul class="mt-2 space-y-1 text-sm">{p.feats.map((f) => <li>✓ {f}</li>)}</ul>
+        {p.current
+          ? <Pill tone="slate" class="mt-3">✓ বর্তমান প্ল্যান</Pill>
+          : <Button href="/i2-payment" full class="mt-3">{p.cta}</Button>}
+      </Card>
+    ))}
+  </div>
+</Layout>

@@ -1,0 +1,38 @@
+---
+/* I2 Payment — pay via local rails (bKash / Nagad first). */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+
+const methods = [
+  { t: 'bKash', icon: '🟣', sel: true },
+  { t: 'Nagad', icon: '🟠', sel: false },
+  { t: 'কার্ড', icon: '💳', sel: false, soon: true },
+];
+---
+<Layout title="পেমেন্ট" id="I2" active="home">
+  <a href="/i1-plans" class="text-sm text-slate-500 dark:text-slate-400">← প্ল্যান</a>
+  <h1 class="mt-1 mb-1 text-lg font-bold">Pro · ৳২৯৯/মাস</h1>
+  <p class="mb-4 text-sm text-emerald-600 dark:text-emerald-400">প্রথম ৭ দিন ফ্রি — আজ কিছু কাটা হবে না।</p>
+
+  <h2 class="mb-2 text-sm font-bold">পেমেন্ট মাধ্যম</h2>
+  <div class="mb-4 space-y-2">
+    {methods.map((m) => (
+      <label class:list={['flex items-center gap-3 rounded-md border px-4 py-3 min-h-touch', m.soon ? 'opacity-50' : '', m.sel ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-500/10' : 'border-slate-200 dark:border-slate-700']}>
+        <span class="text-xl">{m.icon}</span>
+        <span class="flex-1 text-sm font-medium">{m.t} {m.soon && <span class="text-xs text-slate-400">(শীঘ্রই)</span>}</span>
+        <input type="radio" name="pay" class="accent-indigo-600" checked={m.sel} disabled={m.soon} />
+      </label>
+    ))}
+  </div>
+
+  <Card class="mb-4">
+    <label class="block"><span class="mb-1 block text-sm font-medium">প্রোমো কোড</span>
+      <div class="flex gap-2"><input type="text" placeholder="কোড থাকলে" class="flex-1 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800" /><Button variant="secondary" size="sm">প্রয়োগ</Button></div>
+    </label>
+    <label class="mt-3 flex items-center gap-2 text-xs text-slate-500"><input type="checkbox" class="accent-indigo-600" /> পরিবার / ভাইবোন প্ল্যান চাই</label>
+  </Card>
+
+  <Button href="/i4-invoices" full>৳২৯৯ পরিশোধ করো</Button>
+  <p class="mt-2 text-center text-[11px] text-slate-400">states: প্রসেসিং… · পেমেন্ট ব্যর্থ (আবার চেষ্টা)</p>
+</Layout>

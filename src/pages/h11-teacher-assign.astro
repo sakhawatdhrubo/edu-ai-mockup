@@ -1,0 +1,32 @@
+---
+/* H11 Teacher assignment — assign outcomes to students with due dates → appear
+   atop the student's chooser (C1). */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+
+const outcomes = ["Newton's 2nd law", 'ভর বনাম ওজন', 'ঋণাত্মক ত্বরণ'];
+const who = ['পুরো ক্লাস', 'শুধু "Concern!" শিক্ষার্থী', 'বেছে নাও'];
+---
+<Layout title="অ্যাসাইনমেন্ট" id="H11" rails={false} nav={false}>
+  <header class="-mx-4 -mt-4 mb-4 bg-indigo-700 px-4 py-3 text-white">
+    <a href="/h10-teacher-console" class="text-xs text-indigo-200">← কনসোল</a>
+    <h1 class="text-base font-bold">নতুন অ্যাসাইনমেন্ট</h1>
+  </header>
+
+  <Card class="space-y-3">
+    <div>
+      <label class="mb-1 block text-sm font-medium">আউটকাম</label>
+      <select class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800">{outcomes.map((o) => <option>{o}</option>)}</select>
+    </div>
+    <div>
+      <label class="mb-1 block text-sm font-medium">কাকে</label>
+      <select class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800">{who.map((o) => <option>{o}</option>)}</select>
+    </div>
+    <label class="block"><span class="mb-1 block text-sm font-medium">শেষ তারিখ</span><input type="text" value="১০ জুন ২০২৬" class="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm dark:border-slate-700 dark:bg-slate-800" /></label>
+  </Card>
+
+  <Card tone="sky" class="mt-3"><p class="text-sm">শিক্ষার্থী দেখবে: "{`{teacher}`} তোমাকে Newton's 2nd law অনুশীলন দিতে চেয়েছেন — শুরু করি?" — তাদের session chooser-এর উপরে।</p></Card>
+
+  <Button href="/h10-teacher-console" full class="mt-4">অ্যাসাইন করো</Button>
+</Layout>

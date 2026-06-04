@@ -1,0 +1,37 @@
+---
+/* H8 Parent weekly digest — signed link, read-only, separate audience.
+   Privacy-respecting rollups only (§1.7). */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+
+const stats = [
+  { icon: '📚', v: '৫', k: 'session' },
+  { icon: '⏱', v: '৯৮', k: 'মিনিট' },
+  { icon: '🛠', v: '২', k: 'ভুল-বোঝা ঠিক' },
+];
+const gains = ['Acceleration — দক্ষ হলো', 'Velocity — উন্নতি', 'গতির সমীকরণ — শুরু'];
+---
+<Layout title="অভিভাবক ডাইজেস্ট" id="H8" rails={false} nav={false}>
+  <header class="-mx-4 -mt-4 mb-4 bg-emerald-600 px-4 py-3 text-white">
+    <div class="text-xs text-emerald-100">👨‍👩‍👧 অভিভাবক · সাপ্তাহিক সারাংশ (পড়া-শুধু)</div>
+    <h1 class="text-base font-bold">রিফাত-এর এই সপ্তাহের অগ্রগতি</h1>
+    <div class="text-xs text-emerald-100">২৯ মে – ৪ জুন</div>
+  </header>
+
+  <div class="mb-4 grid grid-cols-3 gap-2 text-center">
+    {stats.map((s) => (
+      <Card pad={false} class="py-3"><div class="text-lg">{s.icon}</div><div class="text-lg font-bold">{s.v}</div><div class="text-[10px] text-slate-400">{s.k}</div></Card>
+    ))}
+  </div>
+
+  <Card class="mb-3">
+    <h2 class="mb-2 text-sm font-bold">🎯 সবচেয়ে বড় ৩টি অগ্রগতি</h2>
+    <ul class="space-y-1.5 text-sm">{gains.map((g) => <li>✅ {g}</li>)}</ul>
+  </Card>
+
+  <Card tone="emerald" class="mb-4">
+    <p class="text-sm">রিফাত এই সপ্তাহে নিয়মিত পড়েছে এবং একটি পুরোনো ভুল-ধারণা ঠিক করেছে। বাসায় একটু উৎসাহ দিলে দারুণ চলবে। 💚</p>
+  </Card>
+
+  <p class="text-center text-xs text-slate-400">এই ইমেইল আর পেতে না চাইলে <a href="#" class="underline">unsubscribe</a></p>
+</Layout>

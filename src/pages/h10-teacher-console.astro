@@ -1,0 +1,59 @@
+---
+/* H10 Teacher console (read-only) — class progress + live-class teaching tool.
+   Students sorted "needs attention" first. Privacy per §1.7. */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import Pill from '../components/Pill.astro';
+import Button from '../components/Button.astro';
+
+const students = [
+  { name: 'সাকিব', m: 22, last: '৬ দিন', concern: true },
+  { name: 'নুসরাত', m: 34, last: '২ দিন', concern: true },
+  { name: 'রিফাত', m: 78, last: 'আজ', concern: false },
+  { name: 'তানিয়া', m: 81, last: 'গতকাল', concern: false },
+];
+const heatmap = [
+  { m: 'mass ↔ weight', n: 12 },
+  { m: 'বল ছাড়া গতি নেই', n: 8 },
+  { m: 'ত্বরণ = বেগ÷সময়', n: 5 },
+];
+---
+<Layout title="শিক্ষক কনসোল" id="H10" rails={false} nav={false}>
+  <header class="-mx-4 -mt-4 mb-4 bg-indigo-700 px-4 py-3 text-white">
+    <div class="text-xs text-indigo-200">👩‍🏫 শিক্ষক ভিউ · SSC-A · পদার্থবিজ্ঞান</div>
+    <h1 class="text-base font-bold">ক্লাস অগ্রগতি</h1>
+  </header>
+
+  <!-- class stats -->
+  <Card tone="indigo" class="mb-4"><p class="text-sm">Motion-এ গড় mastery: <span class="font-bold">৫৮%</span> · এই সপ্তাহে active: <span class="font-bold">২৭/৩০</span></p></Card>
+
+  <!-- student list, needs-attention first -->
+  <h2 class="mb-2 text-sm font-bold">শিক্ষার্থী <span class="text-xs font-normal text-slate-400">(মনোযোগ দরকার আগে)</span></h2>
+  <Card pad={false} class="mb-4 divide-y divide-slate-100 dark:divide-slate-800">
+    {students.map((s) => (
+      <a href="/e2-replay" class="flex items-center gap-3 px-4 py-3">
+        <span class="flex-1 text-sm font-medium">{s.name} {s.concern && <Pill tone="rose">Concern!</Pill>}</span>
+        <span class:list={['text-sm font-semibold', s.m < 40 ? 'text-rose-600' : 'text-emerald-600']}>{s.m}%</span>
+        <span class="w-14 text-right text-[11px] text-slate-400">{s.last}</span>
+      </a>
+    ))}
+  </Card>
+
+  <!-- class misconception heatmap -->
+  <h2 class="mb-2 text-sm font-bold">ক্লাসের ভুল-বোঝা</h2>
+  <div class="mb-4 space-y-2">
+    {heatmap.map((h) => (
+      <Card>
+        <div class="flex items-center justify-between text-sm"><span>{h.m}</span><span class="text-rose-600">{h.n} জন</span></div>
+        <Button href="/c5-feedback" variant="secondary" size="sm" class="mt-2">ক্লাসে confront-pattern পড়াও</Button>
+      </Card>
+    ))}
+  </div>
+
+  <!-- invite + export -->
+  <div class="grid grid-cols-2 gap-2">
+    <Button href="/h11-teacher-assign" variant="secondary">📋 অ্যাসাইন করো</Button>
+    <Button href="/h10-teacher-console" variant="secondary">⬇ CSV / PDF</Button>
+  </div>
+  <p class="mt-3 text-center text-xs text-slate-400">join-code: <span class="font-mono font-bold">PHY-7K2</span></p>
+</Layout>

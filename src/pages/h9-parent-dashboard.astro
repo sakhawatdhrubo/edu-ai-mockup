@@ -1,0 +1,37 @@
+---
+/* H9 Parent dashboard + insight — mid-week snapshot + learning insight (not
+   just minutes). Privacy-respecting rollups only (§1.7). */
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/Card.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+
+const struggles = [
+  { o: "Newton's 2nd law", note: 'বল ও ত্বরণের সম্পর্ক গুলিয়ে ফেলছে', plan: 'animation version দিয়ে আবার দেখাব', prompt: 'বাসে ব্রেক করলে কেন সামনে ঝুঁকি?' },
+  { o: 'ভর বনাম ওজন', note: 'kg ও N মিশিয়ে ফেলছে', plan: 'ছোট ছোট প্রশ্নে আলাদা করাব', prompt: 'চাঁদে ওজন কম কেন, ভর কি বদলায়?' },
+];
+---
+<Layout title="অভিভাবক ড্যাশবোর্ড" id="H9" rails={false} nav={false}>
+  <header class="-mx-4 -mt-4 mb-4 bg-emerald-600 px-4 py-3 text-white">
+    <div class="text-xs text-emerald-100">👨‍👩‍👧 অভিভাবক ভিউ · রিফাত</div>
+    <h1 class="text-base font-bold">এই সপ্তাহ — এখন পর্যন্ত</h1>
+  </header>
+
+  <div class="mb-4 grid grid-cols-2 gap-2">
+    <Card pad={false} class="p-3"><div class="text-xs text-slate-400">আজ</div><div class="text-sm font-bold">১ session · ১৫ মিনিট</div></Card>
+    <Card pad={false} class="p-3"><div class="text-xs text-slate-400">সপ্তাহ</div><div class="text-sm font-bold">৪ session · ৭৮ মিনিট</div></Card>
+  </div>
+
+  <h2 class="mb-2 text-sm font-bold">যেখানে সাহায্য দরকার (Top 3)</h2>
+  <div class="space-y-2">
+    {struggles.map((s) => (
+      <Card>
+        <div class="text-sm font-semibold">{s.o}</div>
+        <p class="mt-1 text-xs text-slate-600 dark:text-slate-300">🧠 {s.note}</p>
+        <p class="mt-1 text-xs text-indigo-600 dark:text-indigo-400">🤝 সিস্টেম করবে: {s.plan}</p>
+        <p class="mt-2 rounded-md bg-amber-50 px-2 py-1.5 text-xs text-amber-800 dark:bg-amber-500/10 dark:text-amber-300">🍽 ডিনার-টেবিল প্রশ্ন: "{s.prompt}"</p>
+      </Card>
+    ))}
+  </div>
+
+  <p class="mt-4 text-center text-[11px] text-slate-400">গোপনীয়তা: নির্দিষ্ট ভুল উত্তর বা reflection দেখানো হয় না — শুধু সারাংশ।</p>
+</Layout>

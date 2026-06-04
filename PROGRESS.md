@@ -93,36 +93,37 @@ Zone G — System & utility ✅ (+ real 404.astro mirrors G1)
 - [x] G3 Invite / referral
 - [x] G4 Feedback / bug report
 
-Zone H — Trust & people
-- [ ] H1 Report / Crisis (overlay)
-- [ ] H2 Help index
-- [ ] H3 Help article
-- [ ] H4 Settings
-- [ ] H5 Profile edit
-- [ ] H6 Notification preferences
-- [ ] H7 Data export & delete
-- [ ] H8 Parent weekly digest
-- [ ] H9 Parent dashboard + insight
-- [ ] H10 Teacher console
-- [ ] H11 Teacher assignment
-- [ ] H12 Legal
+Zone H — Trust & people ✅ (parent/teacher = separate audience: own header, no student nav)
+- [x] H1 Report / Crisis (overlay)
+- [x] H2 Help index
+- [x] H3 Help article
+- [x] H4 Settings
+- [x] H5 Profile edit
+- [x] H6 Notification preferences
+- [x] H7 Data export & delete
+- [x] H8 Parent weekly digest
+- [x] H9 Parent dashboard + insight
+- [x] H10 Teacher console
+- [x] H11 Teacher assignment
+- [x] H12 Legal
 
-Zone I — Billing
-- [ ] I1 Plans
-- [ ] I2 Payment
-- [ ] I3 Limit prompt (overlay)
-- [ ] I4 Invoices
+Zone I — Billing ✅
+- [x] I1 Plans
+- [x] I2 Payment
+- [x] I3 Limit prompt (overlay)
+- [x] I4 Invoices
 
 **Phase 2 — Polish (after all screens):**
 - [ ] dark-mode pass · [ ] mobile (~390px) pass on every page · [ ] index complete + all links work · [ ] `npm run build` clean
 
 ## Current next step
-> **Phase 1 — Zone H (H1–H12 Trust/people), then Zone I (I1–I4 Billing). Then Phase 2 polish.** Zones A–G done + builds clean (44 pages incl. index + 404).
+> **Phase 2 — polish.** ALL 58 screens built (zones A–I) + index + 404 = 60 pages, build clean. Remaining: dark-mode pass, ~390px mobile pass, verify all index links resolve, final clean build.
 
 ## Gotchas (read before writing screens)
 - **Inline math/braces**: never write `\(F_{net}=0\)` directly in `.astro` markup — Astro parses `{net}` as an expression and the build errors. Use the `<Math tex="F_{net}=0" />` component (string prop → braces safe). `display` prop for block math.
 
 ## Log (append one line per session/batch — newest at top)
+- 2026-06-05 — Zones H+I done (H1–H12, I1–I4). Parent/teacher screens use own header (separate audience). **All 58 screens built**; build clean, 60 pages. → Phase 2 polish next.
 - 2026-06-05 — Zones D+E+F+G done (D1–D4, E1–E7, F1–F5, G1–G4) + real `404.astro`. Build clean, 44 pages.
 - 2026-06-05 — Zone B (B1) + Zone C (C1–C12) done + added `SessionBar.astro` (session shell via Layout `header` slot). Build clean, 23 pages.
 - 2026-06-05 — Zone A done (A1–A8, 9 screens) + added `Math.astro` (KaTeX-safe braces). Build clean, 10 pages.
