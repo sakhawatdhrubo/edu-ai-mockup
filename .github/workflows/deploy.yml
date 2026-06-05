@@ -1,0 +1,47 @@
+name: Deploy mockup to GitHub Pages
+
+# Publishes the static mockup on every push to main.
+# One-time setup in the repo: Settings → Pages → Source = "GitHub Actions".
+#
+# IMPORTANT: BASE_PATH must match the repo name (project site is served at
+# username.github.io/<repo>/). If you name the repo something other than
+# "edu-ai-mockup", change BASE_PATH below to "/<your-repo-name>/".
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deploy; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      BASE_PATH: /edu-ai-mockup/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build with Astro
+        uses: withastro/action@v3
+        # withastro/action installs deps and runs `astro build`, then uploads
+        # the dist/ as a Pages artifact. It reads BASE_PATH from the job env.
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

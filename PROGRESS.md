@@ -126,6 +126,7 @@ Zone I — Billing ✅
 - **Inline math/braces**: never write `\(F_{net}=0\)` directly in `.astro` markup — Astro parses `{net}` as an expression and the build errors. Use the `<Math tex="F_{net}=0" />` component (string prop → braces safe). `display` prop for block math.
 
 ## Log (append one line per session/batch — newest at top)
+- 2026-06-05 — Added GitHub Pages deploy: `.github/workflows/deploy.yml` (withastro/action) + `astro.config` `base: process.env.BASE_PATH || '/'` + runtime link-shim in `Layout.astro` (prefixes absolute hrefs under the subpath; no-op locally). CI sets `BASE_PATH=/edu-ai-mockup/` — must match repo name. Local dev unaffected. Verified prod-sim build: assets + shim base = `/edu-ai-mockup/`. README has the push + enable-Pages steps.
 - 2026-06-05 — Phase 2 polish done: verified 58/58 pages exist + 0 dead internal links; dark/mobile/KaTeX confirmed; final clean build (60 pages). **Mockup complete.**
 - 2026-06-05 — Zones H+I done (H1–H12, I1–I4). Parent/teacher screens use own header (separate audience). **All 58 screens built**; build clean, 60 pages. → Phase 2 polish next.
 - 2026-06-05 — Zones D+E+F+G done (D1–D4, E1–E7, F1–F5, G1–G4) + real `404.astro`. Build clean, 44 pages.

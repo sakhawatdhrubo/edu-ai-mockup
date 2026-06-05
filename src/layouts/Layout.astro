@@ -15,6 +15,7 @@ interface Props {
   pad?: boolean;        // pad the main area (default true)
 }
 const { title, id = '', rails = true, nav = true, active = '', pad = true } = Astro.props;
+const base = import.meta.env.BASE_URL; // '/' locally, '/REPO/' on GitHub Pages
 ---
 <!doctype html>
 <html lang="bn">
@@ -65,6 +66,21 @@ const { title, id = '', rails = true, nav = true, active = '', pad = true } = As
       src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
       integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk"
       crossorigin="anonymous"></script>
+    <!-- Base-path shim: under a GitHub Pages subpath, prepend the base to our
+         hand-written absolute hrefs (/a1-landing → /REPO/a1-landing). No-op when
+         base is '/' (local dev / root deploy). -->
+    <script is:inline define:vars={{ base }}>
+      (function () {
+        if (!base || base === '/') return;
+        var b = base.replace(/\/$/, '');
+        document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+          var h = a.getAttribute('href');
+          if (!h || h.charAt(1) === '/') return;            // skip protocol-relative //
+          if (h === b || h.indexOf(b + '/') === 0) return;  // already prefixed
+          a.setAttribute('href', b + h);
+        });
+      })();
+    </script>
     <script is:inline>
       window.toggleDark = function () {
         var r = document.documentElement;
