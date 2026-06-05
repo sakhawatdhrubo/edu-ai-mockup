@@ -1,71 +1,288 @@
 ---
-/* C3 Session — explanation panel (5 modalities). Teach the concept; student
-   controls how. Shown here in worked-example modality. */
+/* C3 Session — explanation panel (5 modalities, chat-first). Core learning is
+   the interactive Socratic chat (under-the-hood agents adapt to the student);
+   text / video / animation / worked-example are switchable alternates. The
+   modality switcher works live (no reload) via a small inline script. */
 import Layout from '../layouts/Layout.astro';
 import SessionBar from '../components/SessionBar.astro';
 import Card from '../components/Card.astro';
 import Button from '../components/Button.astro';
 import Banner from '../components/Banner.astro';
 import Math from '../components/Math.astro';
+import Why from '../components/Why.astro';
 
-const modalities = [
-  { icon: '📝', label: 'টেক্সট', sel: false },
-  { icon: '🎬', label: 'ভিডিও', sel: false },
-  { icon: '✨', label: 'অ্যানিমেশন', sel: false },
-  { icon: '🧩', label: 'উদাহরণ', sel: true },
-  { icon: '💬', label: 'প্রশ্নোত্তর', sel: false },
+const chips = [
+  { mod: 'chat', icon: '💬', label: 'প্রশ্নোত্তর' },
+  { mod: 'text', icon: '📝', label: 'টেক্সট' },
+  { mod: 'video', icon: '🎬', label: 'ভিডিও' },
+  { mod: 'anim', icon: '✨', label: 'অ্যানিমেশন' },
+  { mod: 'example', icon: '🧩', label: 'উদাহরণ' },
 ];
 const steps = [
-  { v: 'লেখো যা জানা', why: 'শুরুতেই চলক গুছিয়ে নিলে ভুল কম হয়', body: 'u = 0, v = 20 m/s, t = 5 s' },
-  { v: 'সূত্র বাছো', why: 'বেগ পরিবর্তন ও সময় জানা → সংজ্ঞা সূত্র', body: 'a = (v − u) / t' },
+  { v: 'লেখো যা জানা', why: 'চলক গুছিয়ে নিলে ভুল কম হয়', body: 'u = 0, v = 20 m/s, t = 5 s' },
+  { v: 'সূত্র বাছো', why: 'বেগ পরিবর্তন ও সময় জানা', body: 'a = (v − u) / t' },
   { v: 'বসাও ও হিসাব করো', why: 'এক ধাপে এক কাজ', body: 'a = (20 − 0) / 5 = 4 m/s²' },
 ];
 ---
 <Layout title="ব্যাখ্যা" id="C3" rails={false} active="learn">
   <SessionBar phase="ধাপ ৩ · ব্যাখ্যা" step={3} timer="০২:৪৮" slot="header" />
 
-  <!-- Modality switcher -->
-  <div class="mb-3">
-    <p class="mb-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">অন্যভাবে বুঝতে চাও?</p>
-    <div class="flex gap-1.5 overflow-x-auto pb-1">
-      {modalities.map((m) => (
-        <button type="button" class:list={['flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-xs min-h-touch', m.sel ? 'border-indigo-500 bg-indigo-50 font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300' : 'border-slate-200 dark:border-slate-700']}>
-          <span>{m.icon}</span>{m.label}
+  <!-- concept header -->
+  <div class="mb-3 flex items-start justify-between gap-2">
+    <div>
+      <h1 class="text-base font-bold">ত্বরণ (acceleration)</h1>
+      <Why label="কেন এই concept?">Velocity বুঝে ফেলেছ — এটাই পরের ধাপ, পরীক্ষায় বেশি আসে।</Why>
+    </div>
+  </div>
+
+  <!-- modality switcher (functional) -->
+  <p class="mb-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">কীভাবে বুঝতে চাও?</p>
+  <div id="mod-chips" class="-mx-1 mb-3 flex gap-1.5 overflow-x-auto px-1 pb-1">
+    {chips.map((c, i) => (
+      <button
+        type="button"
+        data-mod={c.mod}
+        class:list={[
+          'flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-xs min-h-touch',
+          i === 0
+            ? 'border-indigo-500 bg-indigo-50 font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300'
+            : 'border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300',
+        ]}
+      >
+        <span>{c.icon}</span>{c.label}
+      </button>
+    ))}
+  </div>
+
+  <!-- ░░░ PANELS ░░░ -->
+
+  <!-- 1) CHAT (default) -->
+  <section data-panel="chat">
+    <Banner tone="info" icon="💬" class="mb-3">টিউটরের সাথে কথা বলে শেখো — সে তোমার উত্তর বুঝে পরের প্রশ্ন ঠিক করছে।</Banner>
+    <div id="chat-thread" class="space-y-2.5">
+      <!-- tutor -->
+      <div class="flex gap-2">
+        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-indigo-600 text-xs text-white">টি</span>
+        <div class="max-w-[80%] rounded-2xl rounded-tl-sm bg-slate-100 px-3 py-2 text-sm dark:bg-slate-800">গাড়ি স্টার্ট নিয়ে জোরে ছুটছে — প্রতি সেকেন্ডে এর বেগ বাড়ছে। এই "বেগ বাড়ার হার"-কে আমরা কী বলি বলো তো?</div>
+      </div>
+      <!-- student -->
+      <div class="flex justify-end gap-2">
+        <div class="max-w-[80%] rounded-2xl rounded-tr-sm bg-indigo-600 px-3 py-2 text-sm text-white">ত্বরণ?</div>
+      </div>
+      <!-- tutor -->
+      <div class="flex gap-2">
+        <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-indigo-600 text-xs text-white">টি</span>
+        <div class="max-w-[80%] rounded-2xl rounded-tl-sm bg-slate-100 px-3 py-2 text-sm dark:bg-slate-800">একদম! 🎯 তাহলে বলো — বেগ যদি না বাড়ে, ধ্রুব থাকে, তখন ত্বরণ কত হবে?</div>
+      </div>
+    </div>
+
+    <!-- typing indicator (hidden until reply) -->
+    <div id="chat-typing" class="mt-2.5 hidden items-center gap-2">
+      <span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-indigo-600 text-xs text-white">টি</span>
+      <span class="rounded-2xl rounded-tl-sm bg-slate-100 px-3 py-2 dark:bg-slate-800"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+    </div>
+
+    <!-- suggested replies -->
+    <div id="chat-suggest" class="mt-3 flex flex-wrap gap-1.5">
+      <button type="button" class="reply rounded-full border border-indigo-200 bg-white px-3 py-1.5 text-xs text-indigo-700 min-h-touch dark:border-indigo-500/40 dark:bg-slate-900 dark:text-indigo-300" data-reply="শূন্য?" data-tutor="ঠিক! ত্বরণ = বেগের পরিবর্তন ÷ সময়। পরিবর্তন না হলে ০। চলো এবার একটা হিসাব করি।">শূন্য?</button>
+      <button type="button" class="reply rounded-full border border-indigo-200 bg-white px-3 py-1.5 text-xs text-indigo-700 min-h-touch dark:border-indigo-500/40 dark:bg-slate-900 dark:text-indigo-300" data-reply="বুঝিনি 🙁" data-tutor="সমস্যা নেই! ভাবো — ত্বরণ মানে বেগ কতটা 'বদলাচ্ছে'। না বদলালে বদল = ০, তাই ত্বরণও ০। আরেকটা উদাহরণ দিই?">বুঝিনি 🙁</button>
+    </div>
+
+    <!-- free input -->
+    <div class="mt-3 flex items-center gap-2 rounded-full border border-slate-300 bg-white px-3 py-1.5 dark:border-slate-700 dark:bg-slate-800">
+      <input id="chat-input" type="text" placeholder="টিউটরকে যা খুশি জিজ্ঞেস করো…" class="flex-1 bg-transparent text-sm outline-none" />
+      <button type="button" aria-label="ভয়েস" class="text-slate-400">🎤</button>
+      <button id="chat-send" type="button" aria-label="পাঠাও" class="grid h-8 w-8 place-items-center rounded-full bg-indigo-600 text-white">↑</button>
+    </div>
+  </section>
+
+  <!-- 2) TEXT -->
+  <section data-panel="text" class="hidden">
+    <Card class="mb-3">
+      <div class="mb-2 flex items-center justify-between">
+        <h2 class="text-sm font-bold">ত্বরণ — সংক্ষেপে</h2>
+        <button type="button" aria-label="পড়ে শোনাও" class="text-slate-400">🔊</button>
+      </div>
+      <p class="text-sm leading-relaxed">ত্বরণ হলো একক সময়ে বেগের পরিবর্তন। বেগ যত দ্রুত বদলায়, ত্বরণ তত বেশি।</p>
+      <div class="mt-2 rounded-md bg-slate-50 p-2 text-center dark:bg-slate-800"><Math tex="a = \dfrac{v - u}{t}" display /></div>
+      <ul class="mt-3 space-y-1 text-sm">
+        <li>• একক: <span class="font-medium">m/s²</span></li>
+        <li>• ভেক্টর (vector) — দিক আছে</li>
+        <li>• বেগ না বদলালে ত্বরণ = ০</li>
+      </ul>
+    </Card>
+  </section>
+
+  <!-- 3) VIDEO -->
+  <section data-panel="video" class="hidden">
+    <div class="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
+      <div id="vid-stage" class="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900">
+        <button id="vid-play" type="button" class="absolute inset-0 grid place-items-center text-white">
+          <span class="grid h-14 w-14 place-items-center rounded-full bg-white/20 text-2xl backdrop-blur">▶</span>
         </button>
-      ))}
+        <div id="vid-playing" class="absolute inset-0 hidden place-items-center text-sm text-white/80">▶ চলছে… 0:42 / 3:12</div>
+        <div class="absolute left-2 top-2 flex gap-1 text-[10px]">
+          <span class="rounded bg-black/50 px-1.5 py-0.5 text-white">CC</span>
+          <span class="rounded bg-black/50 px-1.5 py-0.5 text-white">২×</span>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-white/20"><div class="h-full w-1/5 bg-rose-500"></div></div>
+      </div>
     </div>
+    <div class="mt-2 flex items-center justify-between text-xs">
+      <span class="text-slate-400">ত্বরণ — ৩ মিনিটের ব্যাখ্যা</span>
+      <button type="button" class="text-indigo-600 dark:text-indigo-400">↺ আরেকবার দেখতে চাও?</button>
+    </div>
+
+    <!-- mandatory checkpoint after playback -->
+    <Card id="vid-checkpoint" tone="amber" class="mt-3 hidden">
+      <p class="text-sm font-semibold">🎬 ভিডিওতে যা দেখলে — ছোট প্রশ্ন</p>
+      <p class="mt-1 text-sm">ত্বরণ মাপতে কোনটা দরকার?</p>
+      <div class="mt-2 space-y-1.5">
+        <label class="flex items-center gap-2 rounded-md border border-amber-200 bg-white px-3 py-2 text-sm dark:border-amber-500/30 dark:bg-slate-900"><input type="radio" name="vcp" class="accent-amber-600" /> শুধু বেগ</label>
+        <label class="flex items-center gap-2 rounded-md border border-amber-200 bg-white px-3 py-2 text-sm dark:border-amber-500/30 dark:bg-slate-900"><input type="radio" name="vcp" class="accent-amber-600" checked /> বেগের পরিবর্তন ও সময়</label>
+      </div>
+    </Card>
+    <p id="vid-hint" class="mt-2 text-center text-xs text-slate-400">▶ চালালে ভিডিও শেষে একটি ছোট প্রশ্ন আসবে (passive দেখা নয়)।</p>
+  </section>
+
+  <!-- 4) ANIMATION -->
+  <section data-panel="anim" class="hidden">
+    <Card class="mb-3">
+      <div class="track rounded-md bg-sky-50 dark:bg-sky-500/10">
+        <div class="car">🚗</div>
+        <div class="absolute bottom-2 right-3 flex items-end gap-1">
+          <span class="text-[10px] text-slate-400">বেগ</span>
+          <span class="vbar w-2 rounded-sm bg-indigo-500"></span>
+        </div>
+      </div>
+      <p class="mt-2 text-center text-sm">সময়ের সাথে বেগ বাড়ছে — এই বাড়ার হারই <span class="font-semibold">ত্বরণ</span>।</p>
+      <div class="mt-3 space-y-1.5 text-sm">
+        <p class="text-xs font-medium text-slate-500">ভাবো:</p>
+        <p>• বল বাড়ালে গাড়ি কী করবে?</p>
+        <p>• বেগ-বার থেমে গেলে ত্বরণ কত?</p>
+      </div>
+    </Card>
+  </section>
+
+  <!-- 5) WORKED EXAMPLE -->
+  <section data-panel="example" class="hidden">
+    <Card class="mb-3">
+      <h2 class="mb-2 text-sm font-bold">ধাপে ধাপে উদাহরণ</h2>
+      <p class="mb-2 text-sm">একটি গাড়ি ০ থেকে ৫ সেকেন্ডে <Math tex="20\ \text{m/s}" /> — ত্বরণ?</p>
+      <div class="space-y-2">
+        {steps.map((s, i) => (
+          <details class="rounded-md border border-slate-200 dark:border-slate-700" open={i === 0}>
+            <summary class="cursor-pointer list-none px-3 py-2 text-sm font-medium">ধাপ {i + 1}: {s.v}</summary>
+            <div class="border-t border-slate-100 px-3 py-2 dark:border-slate-800">
+              <p class="font-mono text-sm">{s.body}</p>
+              <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">কেন: {s.why}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </Card>
+  </section>
+
+  <!-- adaptive quick-actions (the tutor agent adapts) -->
+  <div class="mt-4 flex flex-wrap gap-1.5">
+    <button type="button" data-jump="chat" class="rounded-full bg-slate-100 px-3 py-1.5 text-xs text-slate-600 min-h-touch dark:bg-slate-800 dark:text-slate-300">🙋 আরো সহজ করে বলো</button>
+    <button type="button" data-jump="example" class="rounded-full bg-slate-100 px-3 py-1.5 text-xs text-slate-600 min-h-touch dark:bg-slate-800 dark:text-slate-300">🧩 আরেকটা উদাহরণ</button>
+    <button type="button" data-jump="anim" class="rounded-full bg-slate-100 px-3 py-1.5 text-xs text-slate-600 min-h-touch dark:bg-slate-800 dark:text-slate-300">🔁 আরেকভাবে দেখাও</button>
   </div>
 
-  <!-- Fallback note -->
-  <Banner tone="warning" icon="ⓘ" class="mb-3">ভিডিও এই concept-এর জন্য এখনো নেই — উদাহরণ দিয়ে দেখাচ্ছি।</Banner>
-
-  <!-- Worked-example content -->
-  <Card class="mb-3">
-    <div class="mb-2 flex items-center justify-between">
-      <h2 class="text-sm font-bold">ত্বরণ (acceleration) কী?</h2>
-      <button type="button" aria-label="পড়ে শোনাও" class="text-slate-400">🔊</button>
-    </div>
-    <p class="text-sm">ত্বরণ = একক সময়ে বেগের পরিবর্তন। সূত্র: <Math tex="a = \dfrac{v - u}{t}" /></p>
-
-    <div class="mt-3 space-y-2">
-      {steps.map((s, i) => (
-        <details class="rounded-md border border-slate-200 dark:border-slate-700" open={i === 0}>
-          <summary class="cursor-pointer list-none px-3 py-2 text-sm font-medium">ধাপ {i + 1}: {s.v}</summary>
-          <div class="border-t border-slate-100 px-3 py-2 dark:border-slate-800">
-            <p class="font-mono text-sm">{s.body}</p>
-            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">কেন: {s.why}</p>
-          </div>
-        </details>
-      ))}
-    </div>
-  </Card>
-
-  <!-- CTAs -->
-  <div class="flex flex-col gap-2">
-    <Button href="/c4-question" full>চলো অনুশীলন করি</Button>
-    <div class="flex items-center justify-between text-xs">
-      <a href="/c3-explanation" class="text-indigo-600 underline dark:text-indigo-400">আরো একটা ব্যাখ্যা পাও (≤৩×)</a>
-      <a href="/h1-report" class="text-slate-400">⚠ Report</a>
-    </div>
+  <!-- CTA -->
+  <div class="mt-4 flex flex-col gap-2">
+    <Button href="/c4-question" full>চলো অনুশীলন করি →</Button>
+    <a href="/h1-report" class="text-center text-xs text-slate-400">⚠ এই ব্যাখ্যায় সমস্যা?</a>
   </div>
+
+  <style>
+    .track { position: relative; height: 72px; overflow: hidden; }
+    .car { position: absolute; bottom: 8px; left: 0; font-size: 30px; animation: accel 3.2s cubic-bezier(.25,.5,.9,1) infinite; }
+    .vbar { height: 8px; animation: grow 3.2s cubic-bezier(.25,.5,.9,1) infinite; }
+    @keyframes accel { 0% { left: 0; } 100% { left: calc(100% - 40px); } }
+    @keyframes grow { 0% { height: 6px; } 100% { height: 46px; } }
+    .dot { display: inline-block; width: 6px; height: 6px; margin: 0 1px; border-radius: 9999px; background: currentColor; opacity: .4; animation: blink 1.2s infinite; }
+    .dot:nth-child(2) { animation-delay: .2s; } .dot:nth-child(3) { animation-delay: .4s; }
+    @keyframes blink { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+  </style>
+
+  <script is:inline>
+    (function () {
+      var BASE = 'flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-xs min-h-touch border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300';
+      var ON = 'flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-xs min-h-touch border-indigo-500 bg-indigo-50 font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300';
+      var chips = Array.prototype.slice.call(document.querySelectorAll('#mod-chips [data-mod]'));
+      var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
+      function show(m) {
+        chips.forEach(function (c) {
+          var on = c.getAttribute('data-mod') === m;
+          c.className = on ? ON : BASE;
+          // keep icon+label markup: className swap is fine, content untouched
+        });
+        panels.forEach(function (p) { p.classList.toggle('hidden', p.getAttribute('data-panel') !== m); });
+        var top = document.getElementById('mod-chips');
+        if (top) top.scrollIntoView({ block: 'nearest' });
+      }
+      chips.forEach(function (c) { c.addEventListener('click', function () { show(c.getAttribute('data-mod')); }); });
+      document.querySelectorAll('[data-jump]').forEach(function (b) {
+        b.addEventListener('click', function () { show(b.getAttribute('data-jump')); });
+      });
+
+      // video: play → reveal checkpoint
+      var play = document.getElementById('vid-play');
+      if (play) play.addEventListener('click', function () {
+        play.classList.add('hidden');
+        var pl = document.getElementById('vid-playing'); if (pl) { pl.classList.remove('hidden'); pl.classList.add('grid'); }
+        setTimeout(function () {
+          var cp = document.getElementById('vid-checkpoint'); if (cp) cp.classList.remove('hidden');
+          var hint = document.getElementById('vid-hint'); if (hint) hint.classList.add('hidden');
+        }, 1200);
+      });
+
+      // chat: scripted interactive turn
+      var thread = document.getElementById('chat-thread');
+      var typing = document.getElementById('chat-typing');
+      var suggest = document.getElementById('chat-suggest');
+      function bubble(role, text) {
+        var wrap = document.createElement('div');
+        wrap.className = role === 'me' ? 'flex justify-end gap-2' : 'flex gap-2';
+        if (role !== 'me') { var av = document.createElement('span'); av.className = 'grid h-7 w-7 shrink-0 place-items-center rounded-full bg-indigo-600 text-xs text-white'; av.textContent = 'টি'; wrap.appendChild(av); }
+        var b = document.createElement('div');
+        b.className = role === 'me'
+          ? 'max-w-[80%] rounded-2xl rounded-tr-sm bg-indigo-600 px-3 py-2 text-sm text-white'
+          : 'max-w-[80%] rounded-2xl rounded-tl-sm bg-slate-100 px-3 py-2 text-sm dark:bg-slate-800';
+        b.textContent = text;
+        wrap.appendChild(b);
+        thread.appendChild(wrap);
+        wrap.scrollIntoView({ block: 'nearest' });
+      }
+      function tutorReply(text) {
+        if (typing) { typing.classList.remove('hidden'); typing.classList.add('flex'); }
+        setTimeout(function () {
+          if (typing) { typing.classList.add('hidden'); typing.classList.remove('flex'); }
+          bubble('tutor', text);
+        }, 900);
+      }
+      function send(meText, tutorText) {
+        bubble('me', meText);
+        tutorReply(tutorText || 'বুঝলাম। চলো একসাথে ধাপে ধাপে দেখি — তারপর একটা প্রশ্নে যাচাই করব।');
+      }
+      if (suggest) suggest.querySelectorAll('.reply').forEach(function (r) {
+        r.addEventListener('click', function () {
+          send(r.getAttribute('data-reply'), r.getAttribute('data-tutor'));
+          suggest.innerHTML = '';
+        });
+      });
+      var input = document.getElementById('chat-input');
+      var sendBtn = document.getElementById('chat-send');
+      function manualSend() {
+        var v = (input && input.value || '').trim();
+        if (!v) return;
+        input.value = '';
+        send(v, null);
+      }
+      if (sendBtn) sendBtn.addEventListener('click', manualSend);
+      if (input) input.addEventListener('keydown', function (e) { if (e.key === 'Enter') manualSend(); });
+    })();
+  </script>
 </Layout>
