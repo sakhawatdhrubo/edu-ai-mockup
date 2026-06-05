@@ -120,12 +120,19 @@ Zone I — Billing ✅
 - [x] `npm run build` clean (60 pages)
 
 ## Current next step
-> **🎉 DONE — mockup complete.** All 58 screens (zones A–I) + index + 404 = 60 pages; build clean; all internal links resolve; dark + mobile + KaTeX wired. To preview: `npm run dev` → localhost:4321 (open `/`). Future work = visual refinement, native-Bangla copy review, or converting screens to the real React app.
+> **🎉 DONE + DEPLOYED.** All 58 screens + index + 404 = 60 pages. **Live: https://sakhawatdhrubo.github.io/edu-ai-mockup/** (GitHub Pages, auto-deploys on push to main). Local preview: `npm run dev` → localhost:4321. Future work = visual refinement, native-Bangla copy review, or converting screens to the real React app.
+
+## Deploy notes
+- Remote: `git@`/https `github.com/sakhawatdhrubo/edu-ai-mockup` (public). Push to `main` → workflow rebuilds + redeploys.
+- Pages was enabled once via API (workflow GITHUB_TOKEN can't self-enable: "Resource not accessible by integration"). If Pages ever gets disabled, re-enable: Settings → Pages → Source = "GitHub Actions" (or `POST /repos/{o}/{r}/pages {"build_type":"workflow"}`).
+- CI Node must be **22** (Astro 6 needs ≥22.12) — set in `.github/workflows/deploy.yml`.
+- `BASE_PATH=/edu-ai-mockup/` in the workflow must match the repo name.
 
 ## Gotchas (read before writing screens)
 - **Inline math/braces**: never write `\(F_{net}=0\)` directly in `.astro` markup — Astro parses `{net}` as an expression and the build errors. Use the `<Math tex="F_{net}=0" />` component (string prop → braces safe). `display` prop for block math.
 
 ## Log (append one line per session/batch — newest at top)
+- 2026-06-05 — **DEPLOYED LIVE** → https://sakhawatdhrubo.github.io/edu-ai-mockup/ (HTTP 200, assets under subpath OK). Fixed 2 CI issues: Node 20→22 (Astro 6 needs ≥22.12); Pages enabled via API (token couldn't self-enable). Auto-deploys on push to main.
 - 2026-06-05 — Added GitHub Pages deploy: `.github/workflows/deploy.yml` (withastro/action) + `astro.config` `base: process.env.BASE_PATH || '/'` + runtime link-shim in `Layout.astro` (prefixes absolute hrefs under the subpath; no-op locally). CI sets `BASE_PATH=/edu-ai-mockup/` — must match repo name. Local dev unaffected. Verified prod-sim build: assets + shim base = `/edu-ai-mockup/`. README has the push + enable-Pages steps.
 - 2026-06-05 — Phase 2 polish done: verified 58/58 pages exist + 0 dead internal links; dark/mobile/KaTeX confirmed; final clean build (60 pages). **Mockup complete.**
 - 2026-06-05 — Zones H+I done (H1–H12, I1–I4). Parent/teacher screens use own header (separate audience). **All 58 screens built**; build clean, 60 pages. → Phase 2 polish next.
