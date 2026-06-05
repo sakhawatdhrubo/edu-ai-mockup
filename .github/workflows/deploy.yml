@@ -1,8 +1,8 @@
 name: Deploy mockup to GitHub Pages
 
 # Publishes the static mockup on every push to main.
-# configure-pages (enablement: true) auto-enables Pages on the first run, so no
-# manual Settings toggle is needed for a personal public repo.
+# Pages is enabled (Settings → Pages → Source = "GitHub Actions"). The workflow
+# token can't self-enable Pages, so it was enabled once via the API.
 #
 # IMPORTANT: BASE_PATH must match the repo name (project site is served at
 # username.github.io/<repo>/). If the repo is NOT named "edu-ai-mockup",
@@ -43,10 +43,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Configure Pages (auto-enable)
+      - name: Configure Pages
         uses: actions/configure-pages@v4
-        with:
-          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
