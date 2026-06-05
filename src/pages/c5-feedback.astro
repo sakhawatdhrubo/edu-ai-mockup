@@ -7,6 +7,7 @@ import Card from '../components/Card.astro';
 import Button from '../components/Button.astro';
 import Pill from '../components/Pill.astro';
 import ProgressBar from '../components/ProgressBar.astro';
+import AskTutor from '../components/AskTutor.astro';
 ---
 <Layout title="ফিডব্যাক" id="C5" rails={false} active="learn">
   <SessionBar phase="ধাপ ৪ · ফিডব্যাক" step={4} timer="০৫:০২" slot="header" />
@@ -32,6 +33,9 @@ import ProgressBar from '../components/ProgressBar.astro';
     <p class="mt-1 text-sm">নিজের ভাষায় বলো — ত্বরণ কেন বেগের "পরিবর্তন" দিয়ে মাপা হয়?</p>
     <Button href="/c7-smart-moments" variant="ghost" size="sm" class="mt-2">উত্তর দিই →</Button>
   </Card>
+
+  <!-- chat-first: ask the tutor why -->
+  <AskTutor class="mb-3" note="কেন ভুল হলো — টিউটরকে জিজ্ঞেস করো" />
 
   <Button href="/c4-question" full>পরের প্রশ্ন →</Button>
 </Layout>

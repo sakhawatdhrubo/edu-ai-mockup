@@ -1,0 +1,12 @@
+---
+/* Chat-first affordance: an always-available "ask the tutor" launcher for any
+   session screen. In the mockup it routes to the C3 chat modality so the
+   student can talk to the tutor from anywhere they're stuck. */
+interface Props { href?: string; note?: string; class?: string }
+const { href = '/c3-explanation', note = 'টিউটরকে যা খুশি জিজ্ঞেস করো…', class: cls = '' } = Astro.props;
+---
+<a href={href} class:list={['flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-2 text-sm text-indigo-700 min-h-touch dark:border-indigo-500/40 dark:bg-indigo-500/10 dark:text-indigo-300', cls]}>
+  <span class="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-indigo-600 text-[11px] text-white">টি</span>
+  <span class="flex-1 truncate">{note}</span>
+  <span aria-hidden="true">💬</span>
+</a>

@@ -6,6 +6,7 @@ import Card from '../components/Card.astro';
 import Button from '../components/Button.astro';
 import Why from '../components/Why.astro';
 import Math from '../components/Math.astro';
+import AskTutor from '../components/AskTutor.astro';
 ---
 <Layout title="প্রশ্ন" id="C4" rails={false} active="learn">
   <SessionBar phase="ধাপ ৪ · প্রশ্ন ৩/১০" step={4} timer="০৪:১০" slot="header" />
@@ -39,4 +40,7 @@ import Math from '../components/Math.astro';
 
   <Button href="/c5-feedback" full>জমা দাও</Button>
   <p class="mt-2 text-center text-[11px] text-slate-400">হিন্ট ~২০ সেকেন্ড পর খুলবে · <a href="/c6-hint-ladder" class="underline">হিন্ট সিঁড়ি</a></p>
+
+  <!-- chat-first: ask the tutor anytime you're stuck -->
+  <AskTutor class="mt-3" note="আটকে গেছ? টিউটরকে জিজ্ঞেস করো" />
 </Layout>

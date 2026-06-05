@@ -23,6 +23,7 @@ const steps = [
   { v: 'সূত্র বাছো', why: 'বেগ পরিবর্তন ও সময় জানা', body: 'a = (v − u) / t' },
   { v: 'বসাও ও হিসাব করো', why: 'এক ধাপে এক কাজ', body: 'a = (20 − 0) / 5 = 4 m/s²' },
 ];
+const base = import.meta.env.BASE_URL; // for links created at runtime (subpath-safe)
 ---
 <Layout title="ব্যাখ্যা" id="C3" rails={false} active="learn">
   <SessionBar phase="ধাপ ৩ · ব্যাখ্যা" step={3} timer="০২:৪৮" slot="header" />
@@ -53,6 +54,9 @@ const steps = [
       </button>
     ))}
   </div>
+
+  <!-- modality memory (#4): remembered default + one-tap change -->
+  <p id="mod-pref" class="mb-3 text-[11px] text-slate-400">তুমি সাধারণত <span class="font-medium text-slate-500 dark:text-slate-400">💬 প্রশ্নোত্তরে</span> শেখো — খোলা modality-কে ডিফল্ট করতে নিচে ⭐ চাপো।</p>
 
   <!-- ░░░ PANELS ░░░ -->
 
@@ -183,11 +187,12 @@ const steps = [
     </Card>
   </section>
 
-  <!-- adaptive quick-actions (the tutor agent adapts) -->
+  <!-- adaptive quick-actions (the tutor agent adapts) + set-default (#4) -->
   <div class="mt-4 flex flex-wrap gap-1.5">
     <button type="button" data-jump="chat" class="rounded-full bg-slate-100 px-3 py-1.5 text-xs text-slate-600 min-h-touch dark:bg-slate-800 dark:text-slate-300">🙋 আরো সহজ করে বলো</button>
     <button type="button" data-jump="example" class="rounded-full bg-slate-100 px-3 py-1.5 text-xs text-slate-600 min-h-touch dark:bg-slate-800 dark:text-slate-300">🧩 আরেকটা উদাহরণ</button>
     <button type="button" data-jump="anim" class="rounded-full bg-slate-100 px-3 py-1.5 text-xs text-slate-600 min-h-touch dark:bg-slate-800 dark:text-slate-300">🔁 আরেকভাবে দেখাও</button>
+    <button id="set-default" type="button" class="rounded-full border border-amber-300 bg-amber-50 px-3 py-1.5 text-xs font-medium text-amber-700 min-h-touch dark:border-amber-500/40 dark:bg-amber-500/10 dark:text-amber-300">⭐ এটাকে ডিফল্ট করো</button>
   </div>
 
   <!-- CTA -->
@@ -207,28 +212,46 @@ const steps = [
     @keyframes blink { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
   </style>
 
-  <script is:inline>
+  <script is:inline define:vars={{ base }}>
     (function () {
       var BASE = 'flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-xs min-h-touch border-slate-200 text-slate-600 dark:border-slate-700 dark:text-slate-300';
       var ON = 'flex shrink-0 items-center gap-1 rounded-full border px-3 py-1.5 text-xs min-h-touch border-indigo-500 bg-indigo-50 font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300';
+      var LABELS = { chat: '💬 প্রশ্নোত্তরে', text: '📝 টেক্সটে', video: '🎬 ভিডিওতে', anim: '✨ অ্যানিমেশনে', example: '🧩 উদাহরণে' };
+      var AV = '<span class="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-indigo-600 text-xs text-white">টি</span>';
       var chips = Array.prototype.slice.call(document.querySelectorAll('#mod-chips [data-mod]'));
       var panels = Array.prototype.slice.call(document.querySelectorAll('[data-panel]'));
+      var cur = 'chat';
+
       function show(m) {
-        chips.forEach(function (c) {
-          var on = c.getAttribute('data-mod') === m;
-          c.className = on ? ON : BASE;
-          // keep icon+label markup: className swap is fine, content untouched
-        });
+        cur = m;
+        chips.forEach(function (c) { c.className = (c.getAttribute('data-mod') === m) ? ON : BASE; });
         panels.forEach(function (p) { p.classList.toggle('hidden', p.getAttribute('data-panel') !== m); });
-        var top = document.getElementById('mod-chips');
-        if (top) top.scrollIntoView({ block: 'nearest' });
       }
       chips.forEach(function (c) { c.addEventListener('click', function () { show(c.getAttribute('data-mod')); }); });
       document.querySelectorAll('[data-jump]').forEach(function (b) {
         b.addEventListener('click', function () { show(b.getAttribute('data-jump')); });
       });
 
-      // video: play → reveal checkpoint
+      // ── #4 modality memory ──────────────────────────────
+      function pref() { try { return localStorage.getItem('eduai-modality') || 'chat'; } catch (e) { return 'chat'; } }
+      function updateHint() {
+        var el = document.getElementById('mod-pref'); if (!el) return;
+        el.innerHTML = 'তুমি সাধারণত <span class="font-medium text-slate-500 dark:text-slate-400">' + (LABELS[pref()] || LABELS.chat) + '</span> শেখো — খোলা modality-কে ডিফল্ট করতে নিচে ⭐ চাপো।';
+      }
+      function toast(msg) {
+        var t = document.createElement('div');
+        t.className = 'pointer-events-none fixed bottom-28 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2 text-sm text-white shadow-lg dark:bg-slate-100 dark:text-slate-900';
+        t.textContent = msg; document.body.appendChild(t);
+        setTimeout(function () { t.remove(); }, 2200);
+      }
+      var setDef = document.getElementById('set-default');
+      if (setDef) setDef.addEventListener('click', function () {
+        try { localStorage.setItem('eduai-modality', cur); } catch (e) {}
+        updateHint();
+        toast('⭐ ডিফল্ট সেট হলো — পরেরবার এখানেই খুলবে');
+      });
+
+      // ── video: play → reveal mandatory checkpoint ───────
       var play = document.getElementById('vid-play');
       if (play) play.addEventListener('click', function () {
         play.classList.add('hidden');
@@ -239,7 +262,7 @@ const steps = [
         }, 1200);
       });
 
-      // chat: scripted interactive turn
+      // ── chat: scripted interactive teaching + inline practice (#3) ──
       var thread = document.getElementById('chat-thread');
       var typing = document.getElementById('chat-typing');
       var suggest = document.getElementById('chat-suggest');
@@ -252,37 +275,66 @@ const steps = [
           ? 'max-w-[80%] rounded-2xl rounded-tr-sm bg-indigo-600 px-3 py-2 text-sm text-white'
           : 'max-w-[80%] rounded-2xl rounded-tl-sm bg-slate-100 px-3 py-2 text-sm dark:bg-slate-800';
         b.textContent = text;
-        wrap.appendChild(b);
-        thread.appendChild(wrap);
-        wrap.scrollIntoView({ block: 'nearest' });
+        wrap.appendChild(b); thread.appendChild(wrap); wrap.scrollIntoView({ block: 'nearest' });
       }
-      function tutorReply(text) {
-        if (typing) { typing.classList.remove('hidden'); typing.classList.add('flex'); }
+      function tutorReply(text, then) {
+        if (typing) { typing.classList.remove('hidden'); typing.classList.add('flex'); thread.parentNode.insertBefore(typing, thread.nextSibling); }
         setTimeout(function () {
           if (typing) { typing.classList.add('hidden'); typing.classList.remove('flex'); }
           bubble('tutor', text);
+          if (then) setTimeout(then, 700);
         }, 900);
       }
-      function send(meText, tutorText) {
+
+      // inline practice question, answered inside the chat
+      function askQuestion() {
+        var opts = [['5 m/s²', 1], ['30 m/s²', 0], ['180 m/s²', 0], ['0.2 m/s²', 0]];
+        var btns = opts.map(function (o) {
+          return '<button type="button" class="qopt block w-full text-left rounded-md border border-slate-200 bg-white px-3 py-2 text-sm min-h-touch dark:border-slate-700 dark:bg-slate-900" data-ok="' + o[1] + '">' + o[0] + '</button>';
+        }).join('');
+        var wrap = document.createElement('div'); wrap.className = 'flex gap-2';
+        wrap.innerHTML = AV + '<div class="max-w-[88%] rounded-2xl rounded-tl-sm bg-slate-100 px-3 py-2.5 text-sm dark:bg-slate-800"><p class="mb-2">এবার নিজে করো 👇 একটি গাড়ি ০ থেকে ৬ সেকেন্ডে 30 m/s — ত্বরণ কত?</p><div class="space-y-1.5">' + btns + '</div></div>';
+        thread.appendChild(wrap); wrap.scrollIntoView({ block: 'nearest' });
+        wrap.querySelectorAll('.qopt').forEach(function (b) {
+          b.addEventListener('click', function () {
+            var ok = b.getAttribute('data-ok') === '1';
+            wrap.querySelectorAll('.qopt').forEach(function (x) { x.disabled = true; x.classList.add('opacity-60'); });
+            b.classList.remove('opacity-60');
+            b.classList.add(ok ? 'border-emerald-500' : 'border-rose-500', ok ? 'bg-emerald-50' : 'bg-rose-50');
+            bubble('me', b.textContent);
+            if (ok) tutorReply('✓ একদম ঠিক! ৩০−০=৩০, ÷৬ = ৫ m/s²। ধরে ফেলেছ 🎉', finishCTA);
+            else tutorReply('কাছাকাছি — মনে রাখো a = (v−u)/t, শুরুর বেগ ০। আরেকবার?', askQuestion);
+          });
+        });
+      }
+      function finishCTA() {
+        var wrap = document.createElement('div'); wrap.className = 'flex gap-2';
+        wrap.innerHTML = AV + '<div class="max-w-[88%] rounded-2xl rounded-tl-sm bg-slate-100 px-3 py-2.5 text-sm dark:bg-slate-800"><p class="mb-2">আরেকটা করবে, নাকি পুরো অনুশীলনে যাবে?</p><div class="flex flex-wrap gap-1.5"><button id="more-q" type="button" class="rounded-full border border-indigo-300 bg-white px-3 py-1.5 text-xs text-indigo-700 dark:bg-slate-900 dark:text-indigo-300">আরেকটা প্রশ্ন</button><a href="' + base + 'c4-question" class="rounded-full bg-indigo-600 px-3 py-1.5 text-xs text-white">পুরো অনুশীলনে যাও →</a></div></div>';
+        thread.appendChild(wrap); wrap.scrollIntoView({ block: 'nearest' });
+        var mq = wrap.querySelector('#more-q'); if (mq) mq.addEventListener('click', askQuestion);
+      }
+      function send(meText, tutorText, then) {
         bubble('me', meText);
-        tutorReply(tutorText || 'বুঝলাম। চলো একসাথে ধাপে ধাপে দেখি — তারপর একটা প্রশ্নে যাচাই করব।');
+        tutorReply(tutorText || 'বুঝলাম। চলো একসাথে ধাপে ধাপে দেখি — তারপর একটা প্রশ্নে যাচাই করব।', then);
       }
       if (suggest) suggest.querySelectorAll('.reply').forEach(function (r) {
         r.addEventListener('click', function () {
-          send(r.getAttribute('data-reply'), r.getAttribute('data-tutor'));
+          send(r.getAttribute('data-reply'), r.getAttribute('data-tutor'), askQuestion); // → inline practice
           suggest.innerHTML = '';
         });
       });
       var input = document.getElementById('chat-input');
       var sendBtn = document.getElementById('chat-send');
       function manualSend() {
-        var v = (input && input.value || '').trim();
-        if (!v) return;
-        input.value = '';
-        send(v, null);
+        var v = (input && input.value || '').trim(); if (!v) return;
+        input.value = ''; send(v, null);
       }
       if (sendBtn) sendBtn.addEventListener('click', manualSend);
       if (input) input.addEventListener('keydown', function (e) { if (e.key === 'Enter') manualSend(); });
+
+      // open the remembered default modality on load (#4)
+      show(pref());
+      updateHint();
     })();
   </script>
 </Layout>
